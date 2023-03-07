@@ -1,0 +1,26 @@
+server:
+  servlet:
+    context-path: "/api/v1"
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/lagalt_db
+    username: postgres
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create # Change to "create" for first time use to generate database schema then change to "update"
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  banner:
+    location: classpath:/path/to/banner/banner.txt
+  main:
+    allow-bean-definition-overriding: true # If you want to allow overriding of beans
+  sql:
+    init:
+      mode: never
+
+

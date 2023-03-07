@@ -1,0 +1,5 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update  # NEVER CHANGE TO CREATE_DROP OR CREATE IN PRODUCTION. update can add, but never remove tables and columns
+    show-sql: true
