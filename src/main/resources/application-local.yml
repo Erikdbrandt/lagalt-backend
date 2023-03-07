@@ -6,7 +6,7 @@ logging:
     root: INFO
     no:
       lagalt:
-        rest-api: DEBUG
+        lagaltbackend: DEBUG
     org:
       springframework:
         boot:
