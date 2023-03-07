@@ -24,7 +24,7 @@ public class Project {
     private ProjectStatusType project_status;
     private ProjectType project_type;
     @ManyToOne
-    @JoinTable(name = "owner_project",
+    @JoinTable(name = "project_owner",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private AppUser owner;
