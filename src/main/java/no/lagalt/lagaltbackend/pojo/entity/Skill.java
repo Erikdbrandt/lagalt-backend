@@ -21,8 +21,14 @@ public class Skill {
     private String name;// Enum may be?
     private String description;
     @ManyToMany
+    @JoinTable(name = "user_skill",
+            joinColumns = @JoinColumn(name = "skill_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<AppUser> users;
     @ManyToMany
+    @JoinTable(name = "skill_project",
+            joinColumns = @JoinColumn(name = "skill_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
     private Set<Project> projects;
 
 }

@@ -15,7 +15,6 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
 public class AppUser {
 
     @Id
@@ -26,9 +25,9 @@ public class AppUser {
     private String password;
     private AuthorityType authorityType;
     private UserVisibility userVisibility;
-    @OneToMany
+    @OneToMany(mappedBy = "owner")
     private Set<Project> projects;
-    @ManyToMany
+    @ManyToMany(mappedBy = "users")
     private Set<Skill> skills;
 
 }

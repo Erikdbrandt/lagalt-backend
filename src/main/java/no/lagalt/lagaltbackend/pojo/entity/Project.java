@@ -1,5 +1,6 @@
 package no.lagalt.lagaltbackend.pojo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import no.lagalt.lagaltbackend.pojo.enums.ProjectStatusType;
@@ -23,11 +24,16 @@ public class Project {
     private ProjectStatusType project_status;
     private ProjectType project_type;
     @ManyToOne
-    @NonNull
+    @JoinTable(name = "owner_project",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private AppUser owner;
     @ManyToMany
+    @JoinTable(name = "project_participant",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<AppUser> participants;
-    @ManyToMany
+    @ManyToMany(mappedBy = "projects")
     private Set<Skill> skills;
 
 }
