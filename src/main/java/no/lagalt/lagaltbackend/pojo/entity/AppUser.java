@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import no.lagalt.lagaltbackend.pojo.enums.AuthorityType;
+import no.lagalt.lagaltbackend.pojo.enums.UserVisibility;
 
 import java.util.Set;
 
@@ -24,6 +25,7 @@ public class AppUser {
     private String email;
     private String password;
     private AuthorityType authorityType;
+    private UserVisibility userVisibility;
     @OneToMany
     private Set<Project> projects;
     @ManyToMany

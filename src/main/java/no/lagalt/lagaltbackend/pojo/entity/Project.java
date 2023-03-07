@@ -20,8 +20,8 @@ public class Project {
     private String title;
     private String description;
     private String theme;
-    private ProjectStatusType status;
-    private ProjectType projectType;
+    private ProjectStatusType project_status;
+    private ProjectType project_type;
     @ManyToOne
     @NonNull
     private AppUser owner;
