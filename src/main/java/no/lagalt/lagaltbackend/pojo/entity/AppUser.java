@@ -24,14 +24,6 @@ public class AppUser {
     private String full_name;
     private String email;
     private String password;
-
-/*
-    @ElementCollection
-    @CollectionTable(name = "user_skills", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "skill")
-    private Set<String> skills;
-*/
-
     @Enumerated(EnumType.STRING)
     private AuthorityType authorityType;
     @Enumerated(EnumType.STRING)

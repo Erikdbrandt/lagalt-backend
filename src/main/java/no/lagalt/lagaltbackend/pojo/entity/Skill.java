@@ -18,7 +18,7 @@ public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int skill_id;
-    private String name;// Enum may be?
+    private String name;
     private String description;
     @ManyToMany
     @JoinTable(name = "user_skill",
