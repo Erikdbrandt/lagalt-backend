@@ -9,18 +9,15 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update # Change to "create" for first time use to generate database schema then change to "update"
+      ddl-auto: create # change to "create" to drop and create tables, change to "update" to update schema
     properties:
       hibernate:
         show_sql: true
         format_sql: true
-
-  banner:
-    location: classpath:/path/to/banner/banner.txt
   main:
-    allow-bean-definition-overriding: true # If you want to allow overriding of beans
+    allow-bean-definition-overriding: true
   sql:
     init:
-      mode: never
+      mode: always # change to "always" to execute SQL scripts on every startup
 
 

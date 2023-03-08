@@ -1,5 +1,5 @@
 -- Insert some users
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
+/*INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
 VALUES ('John Smith', 'john@example.com', 'zoro123', 'ADMIN', 'HIDDEN');
 
 
@@ -15,6 +15,9 @@ VALUES('J.K. Rowling', 'jkrowling.com', 'jkrowling', 'USER', 'REGULAR');
 
 INSERT INTO project (title, description, theme, project_status, project_type)
 VALUES ('Project 1', 'This is the first project','Easter', 'FOUNDING', 'MUSIC');
+
+INSERT INTO project (title, description, theme, project_status, project_type)
+VALUES ('Project 2', 'This is the second project','Easter', 'FOUNDING', 'MUSIC');
 
 
 INSERT INTO project_owner(project_id,user_id)
@@ -43,3 +46,4 @@ VALUES (1, 1);
 
 INSERT INTO project_skill (project_id, skill_id)
 VALUES (2, 2);
+*/
