@@ -9,7 +9,7 @@ import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void update(AppUser entity) {
-
+    public AppUser update(Integer id, AppUser entity) {
+        return null;
     }
 
     @Override

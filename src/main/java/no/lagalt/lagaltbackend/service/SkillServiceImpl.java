@@ -20,18 +20,24 @@ public class SkillServiceImpl implements SkillService{
     }
 
     @Override
-    public Skill findById(Integer integer) {
-        return null;
+    public Skill findById(Integer id) {
+        return skillRepository.findById(id).get();
     }
 
     @Override
     public Skill create(Skill entity) {
-        return null;
+        return skillRepository.save(entity);
     }
 
     @Override
-    public void update(Skill entity) {
+    public Skill update(Integer id, Skill entity) {
 
+        Skill skill = findById(id);
+
+        skill.setName(entity.getName());
+        skill.setDescription(entity.getDescription());
+
+        return skillRepository.save(skill);
     }
 
     @Override

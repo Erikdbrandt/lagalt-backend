@@ -7,10 +7,7 @@ import no.lagalt.lagaltbackend.pojo.dto.SkillMapper;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.service.SkillService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -36,5 +33,27 @@ public class SkillController {
         return skillList.stream()
                 .map(skillMapper::toSkillDto).collect(Collectors.toList());
     }
+
+    @Operation(summary = "GET SKILL BY ID")
+    @GetMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public SkillDto getSkillById(@PathVariable Integer id) {
+
+        Skill skill = skillService.findById(id);
+
+        return skillMapper.toSkillDto(skill);
+    }
+
+    @Operation(summary = "CREATE SKILL")
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public SkillDto createSkill(@RequestBody SkillDto skillDto) {
+
+        Skill skill = skillMapper.toSkill(skillDto);
+
+        return skillMapper.toSkillDto(skillService.create(skill));
+    }
+
+
 
 }
