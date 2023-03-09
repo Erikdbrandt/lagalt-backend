@@ -1,6 +1,7 @@
 package no.lagalt.lagaltbackend.pojo.dto;
 
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
+import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,13 @@ public class SkillMapperImpl implements SkillMapper {
                     .map(AppUser::getUser_id).collect(Collectors.toList());
 
             dto.setUsers(appUserIds);
+        }
+
+        if(skill.getProjects() != null){
+            List<Integer> projectIds = skill.getProjects().stream()
+                    .map(Project::getProject_id).collect(Collectors.toList());
+
+            dto.setProjects(projectIds);
         }
 
         return dto;
