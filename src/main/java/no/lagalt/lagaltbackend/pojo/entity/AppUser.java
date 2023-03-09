@@ -1,5 +1,6 @@
 package no.lagalt.lagaltbackend.pojo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,5 +35,9 @@ public class AppUser {
 
     @ManyToMany(mappedBy = "users")
     private Set<Skill> skills;
+
+
+//    @JsonIgnore
+//    private byte[] encryptedPassword;
 
 }
