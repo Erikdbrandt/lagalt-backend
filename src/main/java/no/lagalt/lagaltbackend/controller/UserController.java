@@ -1,5 +1,6 @@
 package no.lagalt.lagaltbackend.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.AppUserDto;
 import no.lagalt.lagaltbackend.pojo.dto.AppUserMapper;
@@ -19,6 +20,8 @@ public class UserController {
 
     private final UserService userService;
     private final AppUserMapper userMapper;
+
+    @Operation(summary = "GET ALL USER")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public List<AppUserDto> getAllUser() {
