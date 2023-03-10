@@ -43,6 +43,20 @@ public class SkillServiceImpl implements SkillService{
     @Override
     public void deleteById(Integer integer) {
 
+        if(skillRepository.existsById(integer)){
+            Skill skill = findById(integer);
+            if(skill.getProjects() != null){
+                skill.getProjects().forEach(project -> project.getSkills().remove(skill));
+            }
+            if(skill.getUsers() != null){
+                skill.getUsers().forEach(user -> user.getSkills().remove(skill));
+            }
+
+            skillRepository.deleteById(integer);
+
+        }
+
+
     }
 }
 

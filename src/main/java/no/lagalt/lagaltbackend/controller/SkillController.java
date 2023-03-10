@@ -29,7 +29,7 @@ public class SkillController {
     public List<SkillDto> getAllSkills() {
 
         Collection<Skill> skillList = skillService.findAll();
-        
+
         return skillList.stream()
                 .map(skillMapper::toSkillDto).collect(Collectors.toList());
     }
@@ -54,6 +54,23 @@ public class SkillController {
         return skillMapper.toSkillDto(skillService.create(skill));
     }
 
+    @Operation(summary = "UPDATE SKILL")
+    @PutMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public SkillDto updateSkill(@PathVariable Integer id, @RequestBody SkillDto skillDto) {
+
+        Skill skill = skillMapper.toSkill(skillDto);
+
+        return skillMapper.toSkillDto(skillService.update(id, skill));
+    }
+
+    @Operation(summary = "DELETE SKILL")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteSkill(@PathVariable Integer id) {
+
+        skillService.deleteById(id);
+    }
 
 
 }

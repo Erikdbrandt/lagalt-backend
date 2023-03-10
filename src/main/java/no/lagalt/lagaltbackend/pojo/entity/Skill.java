@@ -20,6 +20,7 @@ public class Skill {
     private int skill_id;
     private String name;
     private String description;
+
     @ManyToMany
     @JoinTable(name = "user_skill",
             joinColumns = @JoinColumn(name = "skill_id"),
