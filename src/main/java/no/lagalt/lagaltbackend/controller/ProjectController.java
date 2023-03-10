@@ -39,7 +39,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "CREATE PROJECT")
-    @GetMapping("/create")
+    @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ProjectDto create(@RequestBody ProjectDto projectDto) {
         Project project = projectMapper.toProject(projectDto);
@@ -48,7 +48,7 @@ public class ProjectController {
 
 
     @Operation(summary = "UPDATE SINGLE PROJECT")
-    @GetMapping("/update/{projectId}")
+    @PatchMapping("/update/{projectId}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ProjectDto updateProjectById(@RequestBody ProjectDto projectDto, @PathVariable("projectId") int projectId) {
         Project project = projectMapper.toProject(projectDto);
@@ -56,7 +56,7 @@ public class ProjectController {
     }
 
     @Operation(summary = "DELETE SINGLE PROJECT")
-    @GetMapping("/delete/{projectId}")
+    @DeleteMapping("/delete/{projectId}")
     @ResponseStatus(value = HttpStatus.OK)
     public String deleteProjectById(@PathVariable("projectId") int projectId) {
         projectService.deleteById(projectId);
