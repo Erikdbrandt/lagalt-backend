@@ -10,8 +10,9 @@ import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
-public class ProjectServiceImpl implements ProjectService{
+public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
+
     @Override
     public Collection<Project> findAll() {
         return projectRepository.findAll();
@@ -19,7 +20,7 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public Project findById(Integer projectId) {
-        return projectRepository.findById(projectId).get();
+        return getProjectById(projectId);
     }
 
     @Override
@@ -40,11 +41,11 @@ public class ProjectServiceImpl implements ProjectService{
         return projectRepository.save(foundProject);
     }
 
-
     @Override
-    public void deleteById(Integer integer) {
-
+    public void deleteById(Integer projectId) {
+        projectRepository.deleteById(projectId);
     }
+
     private Project getProjectById(Integer integer) {
         return projectRepository.findById(integer)
                 .orElseThrow(() -> new ResourceNotFoundException("PROJECT_NOT_EXIST"));
