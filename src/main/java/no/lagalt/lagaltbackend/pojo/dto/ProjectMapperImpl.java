@@ -22,8 +22,9 @@ public class ProjectMapperImpl implements ProjectMapper{
         dto.setTheme(project.getTheme());
         dto.setProject_status(project.getProject_status());
         dto.setProject_type(project.getProject_type());
-        dto.setOwner(project.getOwner().getUser_id());
-
+       if (project.getOwner().getUser_id() != 0) {
+           dto.setOwner(project.getOwner().getUser_id());
+       }
         if(project.getParticipants() != null) {
             List<Integer> appUserIds = project.getParticipants().stream()
                     .map(AppUser::getUser_id).collect(Collectors.toList());
