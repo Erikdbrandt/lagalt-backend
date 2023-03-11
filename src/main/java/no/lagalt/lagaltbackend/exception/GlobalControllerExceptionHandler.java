@@ -35,4 +35,10 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
         ErrorDetails errorDetails = new ErrorDetails(new Date(), unsupportedCharacterException.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(NotAuthorizedException.class)
+    protected ResponseEntity<?> notAuthorizedException(NotAuthorizedException notAuthorizedException, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), notAuthorizedException.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }
