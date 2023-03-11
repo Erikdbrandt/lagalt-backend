@@ -48,6 +48,7 @@ public class JwtAuthenticationController {
 
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
+
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getEmail());
 

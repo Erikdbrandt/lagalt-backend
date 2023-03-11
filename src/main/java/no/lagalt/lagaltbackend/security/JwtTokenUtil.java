@@ -9,17 +9,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 @Slf4j
 @Component
 public class JwtTokenUtil implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -2550185165626007488L;
     public static final long JWT_TOKEN_VALIDITY = 90 * 24 * 60 * 60;
 
@@ -30,20 +31,12 @@ public class JwtTokenUtil implements Serializable {
         String identity = (String) getAllClaimsFromToken(token).get("identity");
         log.trace("Fetching identity: {}",  identity);
         if (identity==null) {
-            identity = (String) getAllClaimsFromToken(token).getSubject();
+            identity = getAllClaimsFromToken(token).getSubject();
         }
         log.trace("Fetching subject: {}",  identity);
         return identity;
     }
 
-    public Date getExpirationDateFromToken(String token) throws UnsupportedEncodingException {
-        return getClaimFromToken(token, Claims::getExpiration);
-    }
-
-    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) throws UnsupportedEncodingException {
-        final Claims claims = getAllClaimsFromToken(token);
-        return claimsResolver.apply(claims);
-    }
     private Claims getAllClaimsFromToken(String token) throws UnsupportedEncodingException {
         try {
             return Jwts.parser().setSigningKey(secret.getBytes("US-ASCII")).parseClaimsJws(token).getBody();
@@ -53,9 +46,7 @@ public class JwtTokenUtil implements Serializable {
         }
     }
 
-    private Boolean isTokenExpired(String token) throws UnsupportedEncodingException {
-
-
+    private Boolean isTokenExpired() {
         log.trace("Returning false for isTokenExpired()");
         return false;
     }
@@ -77,7 +68,7 @@ public class JwtTokenUtil implements Serializable {
     public Boolean validateToken(String token, UserDetails userDetails) throws UnsupportedEncodingException {
         log.debug("In JwtTokenUtil.validateToken()......");
         final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired());
     }
 
 }
