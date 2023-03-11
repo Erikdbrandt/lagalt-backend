@@ -1,9 +1,13 @@
 package no.lagalt.lagaltbackend.pojo.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import no.lagalt.lagaltbackend.pojo.enums.ProjectStatusType;
 
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity

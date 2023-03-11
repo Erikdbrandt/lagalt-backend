@@ -1,20 +1,17 @@
 package no.lagalt.lagaltbackend.pojo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import no.lagalt.lagaltbackend.pojo.enums.AuthorityType;
 import no.lagalt.lagaltbackend.pojo.enums.UserVisibility;
 
-import java.util.List;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppUser {
@@ -37,7 +34,7 @@ public class AppUser {
     private Set<Skill> skills;
 
 
-//    @JsonIgnore
-//    private byte[] encryptedPassword;
+    @JsonIgnore
+    private byte[] encryptedPassword;
 
 }

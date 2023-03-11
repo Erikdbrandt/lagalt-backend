@@ -7,6 +7,7 @@ import no.lagalt.lagaltbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +52,20 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(integer).orElseThrow(() ->
                 new ResourceNotFoundException("USER_NOT_EXIST.")
         );
+    }
+
+    @Override
+    public AppUser getByUsername(String username) {
+        Optional<AppUser> user = userRepository.findAppUserByEmail(username);
+        if (user.isEmpty()) {
+            throw new ResourceNotFoundException("USER_DOES_NOT_EXIST");
+        }
+        return user.get();
+    }
+
+    @Override
+    public AppUser getCurrentTokenUser() {
+
+        return null;
     }
 }

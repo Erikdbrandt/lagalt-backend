@@ -19,5 +19,5 @@ spring:
   sql:
     init:
       mode: never # change to "always" to execute SQL scripts on every startup
-
-
+jwt:
+  secret: 092345i6wetrp09wpOOPUl
