@@ -39,5 +39,18 @@ public class StartUpRun implements CommandLineRunner {
 
             log.debug("User {} created...", user.getFull_name());
         }
+        if ( !userRepository.existsByEmail("dev@arif.se") ) {
+
+            AppUser user = AppUser.builder()
+                    .full_name("Mr Arif")
+                    .authorityType(AuthorityType.USER)
+                    .email("dev@arif.se")
+                    .encryptedPassword(passwordEncoder.encode("fooboo123").getBytes(StandardCharsets.UTF_8))
+                    .build();
+
+            userRepository.save(user);
+
+            log.debug("User {} created...", user.getFull_name());
+        }
     }
 }

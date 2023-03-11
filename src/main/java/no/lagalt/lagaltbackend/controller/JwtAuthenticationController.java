@@ -10,6 +10,7 @@ import no.lagalt.lagaltbackend.security.JwtResponse;
 import no.lagalt.lagaltbackend.security.JwtTokenUtil;
 import no.lagalt.lagaltbackend.security.JwtUserDetailsService;
 import no.lagalt.lagaltbackend.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,12 +36,15 @@ public class JwtAuthenticationController {
 
 
     @GetMapping
-    public AppUser getCurrentTokenUser(){
-        return userService.getCurrentTokenUser();
+    @ResponseStatus(value = HttpStatus.OK)
+    public AppUserDto getCurrentTokenUser(){
+        AppUser currentTokenUser = userService.getCurrentTokenUser();
+        return userMapper.toAppUserDto(currentTokenUser);
     }
 
 
     @PostMapping(produces= MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
         log.debug("In auth controller");
