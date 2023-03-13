@@ -1,15 +1,15 @@
 -- Insert some users
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
+INSERT INTO app_user (full_name, email, password, roles, user_visibility)
 VALUES ('John Smith', 'john@example.com', 'zoro123', 'ADMIN', 'HIDDEN');
 
 
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
+INSERT INTO app_user (full_name, email, password, roles, user_visibility)
 VALUES ('Juli Zeh', 'juliZeh@gmail.com', 'zoeeeh', 'USER', 'REGULAR');
 
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
+INSERT INTO app_user (full_name, email, password, roles, user_visibility)
 VALUES('Donna Tartt', 'donna.tartt@gmail.com', 'donnis', 'USER', 'REGULAR');
 
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
+INSERT INTO app_user (full_name, email, password, roles, user_visibility)
 VALUES('J.K. Rowling', 'jkrowling.com', 'jkrowling', 'USER', 'REGULAR');
 
 

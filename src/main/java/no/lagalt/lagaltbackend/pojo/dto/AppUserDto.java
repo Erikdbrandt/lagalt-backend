@@ -12,7 +12,7 @@ public class AppUserDto {
     private String full_name;
     private String email;
     private String password;
-    private AuthorityType authorityType;
+    private String roles;
     private UserVisibility userVisibility;
     private List<Integer> projects;
     private List<Integer> skills;
