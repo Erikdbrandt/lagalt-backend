@@ -7,6 +7,7 @@ import no.lagalt.lagaltbackend.pojo.dto.AppUserMapper;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
