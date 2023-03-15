@@ -33,7 +33,7 @@ public class AppUser {
     private Set<Skill> skills;
 
 
-    @JsonIgnore
-    private byte[] encryptedPassword;
+//    @JsonIgnore
+//    private byte[] encryptedPassword;
 
 }

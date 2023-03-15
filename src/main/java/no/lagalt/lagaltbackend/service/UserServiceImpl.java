@@ -28,8 +28,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public AppUser create(AppUser user) { // need to implement passwordEncoder
-        user.setEncryptedPassword(passwordEncoder.encode(user.getPassword()).getBytes(StandardCharsets.UTF_8));
+    public AppUser create(AppUser user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+       // user.setEncryptedPassword(passwordEncoder.encode(user.getPassword()).getBytes(StandardCharsets.UTF_8));
         return userRepository.save(user);
     }
 
@@ -38,7 +39,8 @@ public class UserServiceImpl implements UserService{
         AppUser foundUser = getUserById(userId);
         foundUser.setFull_name(user.getFull_name());
         foundUser.setEmail(user.getEmail());
-        foundUser.setEncryptedPassword(passwordEncoder.encode(user.getPassword()).getBytes(StandardCharsets.UTF_8));
+        foundUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        //foundUser.setEncryptedPassword(passwordEncoder.encode(user.getPassword()).getBytes(StandardCharsets.UTF_8));
         foundUser.setRoles(user.getRoles());
         foundUser.setUserVisibility(user.getUserVisibility());
         return userRepository.save(foundUser);
