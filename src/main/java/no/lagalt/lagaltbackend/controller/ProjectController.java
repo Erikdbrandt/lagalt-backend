@@ -31,6 +31,7 @@ public class ProjectController {
 
     }
 
+//    @PreAuthorize("hasRole('offline_access')")
     @Operation(summary = "GET SINGLE PROJECT")
     @GetMapping("/{projectId}")
     @ResponseStatus(value = HttpStatus.OK)

@@ -7,6 +7,7 @@ import no.lagalt.lagaltbackend.pojo.dto.AppUserMapper;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -21,6 +22,7 @@ public class UserController {
     private final UserService userService;
     private final AppUserMapper userMapper;
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "GET ALL USERS")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
