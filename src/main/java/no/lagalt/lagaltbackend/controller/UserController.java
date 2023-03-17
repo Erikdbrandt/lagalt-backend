@@ -39,9 +39,17 @@ public class UserController {
         return userMapper.toAppUserDto(userService.findById(userId));
     }
 
+    @Operation(summary = "GET SINGLE USER BY EMAIL")
+    @GetMapping("/email/{email}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public AppUserDto findByEmail(@PathVariable("email") String email) {
+        return userMapper.toAppUserDto(userService.findByEmail(email));
+    }
+
     @Operation(summary = "CREATE USER")
     @GetMapping("/create")
     @ResponseStatus(value = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET})
     public AppUserDto create(@RequestBody AppUserDto userDto) {
         AppUser appUser = userMapper.toAppUser(userDto);
         return userMapper.toAppUserDto(userService.create(appUser));

@@ -12,9 +12,16 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
+
+
+
     private final UserRepository userRepository;
 //    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+
+    public AppUser findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
     @Override
     public Collection<AppUser> findAll() {
         return userRepository.findAll();
