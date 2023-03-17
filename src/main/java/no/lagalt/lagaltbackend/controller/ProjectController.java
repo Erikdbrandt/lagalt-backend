@@ -7,6 +7,7 @@ import no.lagalt.lagaltbackend.pojo.dto.ProjectMapper;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.service.ProjectService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -23,6 +24,7 @@ public class ProjectController {
     @Operation(summary = "GET ALL PROJECT")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
+//    @PreAuthorize("hasRole('adminn')")
     public List<ProjectDto> getAllProject() {
         Collection<Project> projects = projectService.findAll();
         return projects.stream()
