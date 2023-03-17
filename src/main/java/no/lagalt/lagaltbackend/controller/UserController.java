@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @Operation(summary = "CREATE USER")
-    @GetMapping("/create")
+    @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.OK)
     public AppUserDto create(@RequestBody AppUserDto userDto) {
         AppUser appUser = userMapper.toAppUser(userDto);
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @Operation(summary = "UPDATE SINGLE USER")
-    @GetMapping("/update/{userId}")
+    @PatchMapping("/update/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
     public AppUserDto updateById(@RequestBody AppUserDto appUserDto,@PathVariable("userId") int userId) {
         AppUser appUser = userMapper.toAppUser(appUserDto);
@@ -57,7 +57,7 @@ public class UserController {
 
 
     @Operation(summary = "DELETE USER BY ID")
-    @GetMapping("/delete/{userId}")
+    @DeleteMapping("/delete/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
     public String deleteById(@PathVariable("userId") int userId) {
         userService.deleteById(userId);
