@@ -45,7 +45,7 @@ public class SkillController {
     }
 
     @Operation(summary = "CREATE SKILL")
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
     public SkillDto createSkill(@RequestBody SkillDto skillDto) {
 
@@ -55,7 +55,7 @@ public class SkillController {
     }
 
     @Operation(summary = "UPDATE SKILL")
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public SkillDto updateSkill(@PathVariable Integer id, @RequestBody SkillDto skillDto) {
 
