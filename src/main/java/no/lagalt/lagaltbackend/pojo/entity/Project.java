@@ -34,7 +34,10 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<AppUser> participants;
 
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany
+    @JoinTable(name = "project_skill",
+            joinColumns = @JoinColumn(name = "skill_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
     private Set<Skill> skills;
 
 }
