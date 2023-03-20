@@ -13,7 +13,8 @@ import java.util.Collection;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-//    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final UserAuthorizer authorizer;
+
 
     @Override
     public Collection<AppUser> findAll() {
@@ -51,5 +52,10 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(integer).orElseThrow(() ->
                 new ResourceNotFoundException("USER_NOT_EXIST.")
         );
+    }
+
+    @Override
+    public AppUser getCurrentTokenUser() {
+        return authorizer.getCurrentTokenUser();
     }
 }
