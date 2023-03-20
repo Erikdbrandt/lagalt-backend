@@ -27,7 +27,7 @@ public class SecurityConfig {
                 // Enable security for http requests
                 .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers("/project").permitAll()
-//                                .requestMatchers("/user").authenticated()
+//                                .requestMatchers("/auth").authenticated()
 //                        .requestMatchers("/api/v1/resources/authorized").hasAuthority("profile")
 //                        .requestMatchers("/project/**").hasRole("offline_access")
                                 // All endpoints are protected

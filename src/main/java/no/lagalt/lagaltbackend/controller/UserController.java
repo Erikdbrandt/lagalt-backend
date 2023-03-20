@@ -22,6 +22,13 @@ public class UserController {
     private final UserService userService;
     private final AppUserMapper userMapper;
 
+    @GetMapping("/auth")
+    @ResponseStatus(value = HttpStatus.OK)
+    public AppUserDto getCurrentTokenUser() {
+        AppUser currentTokenUse = userService.getCurrentTokenUser();
+        return userMapper.toAppUserDto(currentTokenUse);
+    }
+
 //    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "GET ALL USERS")
     @GetMapping

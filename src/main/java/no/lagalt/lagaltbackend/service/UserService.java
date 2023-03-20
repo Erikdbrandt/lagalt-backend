@@ -4,4 +4,5 @@ import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 
 public interface UserService extends CrudService<AppUser,Integer>{
     AppUser getCurrentTokenUser();
+
 }

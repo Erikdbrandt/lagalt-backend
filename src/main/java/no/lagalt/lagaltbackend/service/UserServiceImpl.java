@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -14,6 +15,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final UserAuthorizer authorizer;
+
 
 
     @Override
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public AppUser create(AppUser entity) { // need to implement passwordEncoder
+        authorizer.loadUserByUsername();
         return userRepository.save(entity);
     }
 
@@ -56,6 +59,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public AppUser getCurrentTokenUser() {
+        authorizer.loadUserByUsername();
         return authorizer.getCurrentTokenUser();
     }
 }
