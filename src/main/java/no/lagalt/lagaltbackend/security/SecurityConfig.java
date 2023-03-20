@@ -26,7 +26,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 // Enable security for http requests
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers("/project").permitAll()
+                                .requestMatchers("/project", "/project/{id}").permitAll()
+
 //                                .requestMatchers("/user").authenticated()
 //                        .requestMatchers("/api/v1/resources/authorized").hasAuthority("profile")
 //                        .requestMatchers("/project/**").hasRole("offline_access")
