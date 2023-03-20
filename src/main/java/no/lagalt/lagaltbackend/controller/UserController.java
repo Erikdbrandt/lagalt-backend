@@ -43,11 +43,17 @@ public class UserController {
     @GetMapping("/email/{email}")
     @ResponseStatus(value = HttpStatus.OK)
     public AppUserDto findByEmail(@PathVariable("email") String email) {
+
+        //if email is not found, return null
+        if (userService.findByEmail(email) == null) {
+            return null;
+        }
+
         return userMapper.toAppUserDto(userService.findByEmail(email));
     }
 
     @Operation(summary = "CREATE USER")
-    @GetMapping("/create")
+    @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.OK)
     @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET})
     public AppUserDto create(@RequestBody AppUserDto userDto) {
