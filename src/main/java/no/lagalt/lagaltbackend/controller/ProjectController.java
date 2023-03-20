@@ -21,8 +21,6 @@ import java.util.stream.Collectors;
 public class ProjectController {
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
-    private final SkillMapper skillMapper;
-
     @Operation(summary = "GET ALL PROJECT")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
