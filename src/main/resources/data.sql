@@ -45,4 +45,7 @@ INSERT INTO project_skill (project_id, skill_id)
 VALUES (1, 1);
 
 INSERT INTO project_skill (project_id, skill_id)
+VALUES (1, 2);
+
+INSERT INTO project_skill (project_id, skill_id)
 VALUES (2, 2);

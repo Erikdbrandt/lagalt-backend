@@ -2,11 +2,8 @@ package no.lagalt.lagaltbackend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import no.lagalt.lagaltbackend.pojo.dto.ProjectDto;
-import no.lagalt.lagaltbackend.pojo.dto.ProjectMapper;
-import no.lagalt.lagaltbackend.pojo.dto.SkillMapper;
+import no.lagalt.lagaltbackend.pojo.dto.*;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
-import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.service.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +18,9 @@ import java.util.stream.Collectors;
 public class ProjectController {
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
+
+    private final AppUserMapper appUserMapper;
+
     @Operation(summary = "GET ALL PROJECT")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
@@ -42,7 +42,25 @@ public class ProjectController {
 
     }
 
-//    @PreAuthorize("hasRole('offline_access')")
+    @Operation(summary = "GET PROJECT OWNER")
+    @GetMapping("/owner/{projectId}")
+    @ResponseStatus(value = HttpStatus.OK)
+//    @PreAuthorize("hasRole('adminn')")
+    public AppUserDto getProjectOwnerName(@PathVariable("projectId") int projectId) {
+        return appUserMapper.toAppUserDto(projectService.findProjectOwner(projectId));
+
+    }
+
+    @Operation(summary = "GET PROJECT OWNER")
+    @GetMapping("/ownerName/{projectId}")
+    @ResponseStatus(value = HttpStatus.OK)
+//    @PreAuthorize("hasRole('adminn')")
+    public String getProjectOwnerNameString(@PathVariable("projectId") int projectId) {
+        return projectService.findProjectOwnerName(projectId);
+
+    }
+
+    //    @PreAuthorize("hasRole('offline_access')")
     @Operation(summary = "GET SINGLE PROJECT")
     @GetMapping("/{projectId}")
     @ResponseStatus(value = HttpStatus.OK)
