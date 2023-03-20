@@ -3,9 +3,11 @@ package no.lagalt.lagaltbackend.service;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
+import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -45,9 +47,21 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteById(Integer projectId) {
         projectRepository.deleteById(projectId);
     }
+    @Override
+    public Collection<String> findProjectSkill(int projectId) {
+        Project foundProject = getProjectById(projectId);
+        Collection<Skill> skills = foundProject.getSkills();
+        Collection<String> skillNames = new ArrayList<>();
+
+        for( Skill skill : skills) {
+            skillNames.add(skill.getName());
+        }
+        return skillNames;
+    }
 
     private Project getProjectById(Integer integer) {
         return projectRepository.findById(integer)
                 .orElseThrow(() -> new ResourceNotFoundException("PROJECT_NOT_EXIST"));
     }
+
 }

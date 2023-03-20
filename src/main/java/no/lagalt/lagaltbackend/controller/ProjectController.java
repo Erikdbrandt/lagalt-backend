@@ -4,10 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.ProjectDto;
 import no.lagalt.lagaltbackend.pojo.dto.ProjectMapper;
+import no.lagalt.lagaltbackend.pojo.dto.SkillMapper;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
+import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.service.ProjectService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class ProjectController {
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
+    private final SkillMapper skillMapper;
 
     @Operation(summary = "GET ALL PROJECT")
     @GetMapping
@@ -30,6 +32,15 @@ public class ProjectController {
         return projects.stream()
                 .map(projectMapper::toProjectDto)
                 .collect(Collectors.toList());
+
+    }
+
+    @Operation(summary = "GET PROJECT SKILLS")
+    @GetMapping("/skills/{projectId}")
+    @ResponseStatus(value = HttpStatus.OK)
+//    @PreAuthorize("hasRole('adminn')")
+    public Collection<String> getProjectSkillName(@PathVariable("projectId") int projectId) {
+        return projectService.findProjectSkill(projectId);
 
     }
 
