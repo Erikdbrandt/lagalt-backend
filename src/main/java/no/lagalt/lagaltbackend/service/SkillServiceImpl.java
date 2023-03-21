@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
-public class SkillServiceImpl implements SkillService{
+public class SkillServiceImpl implements SkillService {
 
 
     private final SkillRepository skillRepository;
@@ -33,7 +33,7 @@ public class SkillServiceImpl implements SkillService{
     @Override
     public Skill update(Integer id, Skill entity) {
 
-        Skill skill = findById(id);
+        Skill skill = getSkillById(id);
 
         skill.setName(entity.getName());
         skill.setDescription(entity.getDescription());
@@ -44,19 +44,16 @@ public class SkillServiceImpl implements SkillService{
     @Override
     public void deleteById(Integer integer) {
 
-        if(skillRepository.existsById(integer)){
-            Skill skill = findById(integer);
-            if(skill.getProjects() != null){
-                skill.getProjects().forEach(project -> project.getSkills().remove(skill));
-            }
-            if(skill.getUsers() != null){
-                skill.getUsers().forEach(user -> user.getSkills().remove(skill));
-            }
+        Skill skill = getSkillById(integer);
 
-            skillRepository.deleteById(integer);
-
+        if (skill.getProjects() != null) {
+            skill.getProjects().forEach(project -> project.getSkills().remove(skill));
+        }
+        if (skill.getUsers() != null) {
+            skill.getUsers().forEach(user -> user.getSkills().remove(skill));
         }
 
+        skillRepository.deleteById(integer);
 
     }
 
