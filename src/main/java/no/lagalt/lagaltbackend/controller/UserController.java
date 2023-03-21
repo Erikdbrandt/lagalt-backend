@@ -25,8 +25,8 @@ public class UserController {
     @GetMapping("/auth")
     @ResponseStatus(value = HttpStatus.OK)
     public AppUserDto getCurrentTokenUser() {
-        AppUser currentTokenUse = userService.getCurrentTokenUser();
-        return userMapper.toAppUserDto(currentTokenUse);
+        AppUser currentTokenUser = userService.getCurrentTokenUser();
+        return userMapper.toAppUserDto(currentTokenUser);
     }
 
 //    @PreAuthorize("hasRole('ADMIN')")
