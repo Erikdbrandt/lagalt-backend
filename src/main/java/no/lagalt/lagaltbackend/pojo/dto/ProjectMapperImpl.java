@@ -55,7 +55,6 @@ public class ProjectMapperImpl implements ProjectMapper {
         project.setProject_status(dto.getProject_status());
         project.setProject_type(dto.getProject_type());
 
-
         return project;
     }
 }

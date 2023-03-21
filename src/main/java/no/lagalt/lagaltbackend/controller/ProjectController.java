@@ -6,6 +6,7 @@ import no.lagalt.lagaltbackend.pojo.dto.*;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.service.ProjectService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -71,6 +72,7 @@ public class ProjectController {
     @Operation(summary = "CREATE PROJECT")
     @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
+    @PreAuthorize("hasRole('offline_offset')")
     public ProjectDto create(@RequestBody ProjectDto projectDto) {
         Project project = projectMapper.toProject(projectDto);
         return projectMapper.toProjectDto(projectService.create(project));
