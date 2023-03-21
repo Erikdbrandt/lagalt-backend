@@ -1,6 +1,7 @@
 package no.lagalt.lagaltbackend.service;
 
 import lombok.RequiredArgsConstructor;
+import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.SkillRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class SkillServiceImpl implements SkillService{
 
     @Override
     public Skill findById(Integer id) {
-        return skillRepository.findById(id).get();
+        return getSkillById(id);
     }
 
     @Override
@@ -57,6 +58,10 @@ public class SkillServiceImpl implements SkillService{
         }
 
 
+    }
+
+    private Skill getSkillById(Integer id) {
+        return skillRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("SKILL_NOT_EXIST"));
     }
 }
 
