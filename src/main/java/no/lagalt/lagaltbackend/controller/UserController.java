@@ -61,14 +61,21 @@ public class UserController {
         return userMapper.toAppUserDto(userService.create(appUser));
     }
 
-    @Operation(summary = "UPDATE SINGLE USER")
+/*    @Operation(summary = "UPDATE SINGLE USER")
     @GetMapping("/update/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
     public AppUserDto updateById(@RequestBody AppUserDto appUserDto,@PathVariable("userId") int userId) {
         AppUser appUser = userMapper.toAppUser(appUserDto);
         return userMapper.toAppUserDto(userService.update(userId, appUser));
-    }
+    }*/
 
+    @Operation(summary = "UPDATE SINGLE USER")
+    @PutMapping("/update/{userId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public AppUserDto updateById(@RequestBody AppUserDto updatedUser, @PathVariable("userId") int userId) {
+        AppUser appUser = userMapper.toAppUser(updatedUser);
+        return userMapper.toAppUserDto(userService.update(userId, appUser));
+    }
 
     @Operation(summary = "DELETE USER BY ID")
     @GetMapping("/delete/{userId}")
