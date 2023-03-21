@@ -24,7 +24,6 @@ public class ProjectController {
     @Operation(summary = "GET ALL PROJECT")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-//    @PreAuthorize("hasRole('adminn')")
     public List<ProjectDto> getAllProject() {
         Collection<Project> projects = projectService.findAll();
         return projects.stream()
@@ -33,7 +32,6 @@ public class ProjectController {
 
     }
 
-//    @PreAuthorize("hasRole('offline_access')")
     @Operation(summary = "GET SINGLE PROJECT")
     @GetMapping("/{projectId}")
     @ResponseStatus(value = HttpStatus.OK)
