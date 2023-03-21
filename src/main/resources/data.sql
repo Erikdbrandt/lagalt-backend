@@ -43,8 +43,23 @@ VALUES (1, 2),
        (1, 3);
 
 INSERT INTO skill (name, description)
+VALUES ('Rhythmic',
+        'The basis of music and dance.');
+
+INSERT INTO skill (name, description)
+VALUES ('Vocal',
+        'A communication skill that refers to the quality of a person''s voice and how they use it to convey their message.');
+
+INSERT INTO skill (name, description)
+VALUES ('Dancing',
+        'Is the ability to move one''s body rhythmically to music or sound.');
+
+INSERT INTO skill (name, description)
 VALUES ('Java',
         'Java is a general-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically designed to have as few implementation dependencies as possible.');
+INSERT INTO skill (name, description)
+VALUES ('React',
+        'Work with and write semantic HTML tags. Work with and write CSS selectors. Implement a CSS reset. Understand the box model and how to reset to border-box.');
 
 INSERT INTO skill (name, description)
 VALUES ('Python',
