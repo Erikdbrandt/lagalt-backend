@@ -16,8 +16,7 @@ public class AppUserMapperImpl implements AppUserMapper {
         dto.setUser_id(user.getUser_id());
         dto.setFull_name(user.getFull_name());
         dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword());
-        dto.setAuthorityType(user.getAuthorityType());
+        dto.setRoles(user.getRoles());
         dto.setUserVisibility(user.getUserVisibility());
         if (user.getProjects() != null) {
             List<Integer> projectId = user.getProjects().stream()
@@ -41,8 +40,7 @@ public class AppUserMapperImpl implements AppUserMapper {
         user.setUser_id(dto.getUser_id());
         user.setFull_name(dto.getFull_name());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        user.setAuthorityType(dto.getAuthorityType());
+        user.setRoles(dto.getRoles());
         user.setUserVisibility(dto.getUserVisibility());
         return user;
     }

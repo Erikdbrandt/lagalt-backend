@@ -24,10 +24,7 @@ public class AppUser {
     private int user_id;
     private String full_name;
     private String email;
-//    @Transient
-    private String password;
-    @Enumerated(EnumType.STRING)
-    private AuthorityType authorityType;
+    private String roles;
     @Enumerated(EnumType.STRING)
     private UserVisibility userVisibility;
     @OneToMany(mappedBy = "owner")
@@ -36,8 +33,5 @@ public class AppUser {
     @ManyToMany(mappedBy = "users")
     private Set<Skill> skills;
 
-
-//    @JsonIgnore
-//    private byte[] encryptedPassword;
 
 }
