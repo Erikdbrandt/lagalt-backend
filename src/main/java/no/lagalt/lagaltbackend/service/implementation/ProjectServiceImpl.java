@@ -10,6 +10,7 @@ import no.lagalt.lagaltbackend.repository.SkillRepository;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 import no.lagalt.lagaltbackend.service.services.ProjectService;
 import no.lagalt.lagaltbackend.service.services.SkillService;
+import no.lagalt.lagaltbackend.service.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,6 +23,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final UserRepository userRepository;
     private final SkillRepository skillRepository;
     private final SkillService skillService;
+    private final UserService userService;
 
     @Override
     public Collection<Project> findAll() {
@@ -108,6 +110,21 @@ public class ProjectServiceImpl implements ProjectService {
             Set<Project> projects = skill.getProjects();
             projects.add(project);
             skill.setProjects(projects);
+        }
+        return projectRepository.save(project);
+    }
+
+    @Override
+    public Project addParticipantsToProject(Set<Integer> participants, int projectId) {
+        Project project = findById(projectId);
+        Set<AppUser> participantSet = participants.stream().map(userService::findById)
+                .collect(Collectors.toSet());
+        project.setParticipants(participantSet);
+
+        for (AppUser participant : participantSet) {
+            Set<Project> projects = participant.getProjects();
+            projects.add(project);
+            participant.setProjects(projects);
         }
         return projectRepository.save(project);
     }

@@ -94,6 +94,13 @@ public class ProjectController {
         return projectMapper.toProjectDto(projectService.addSkillsToProject(skills, projectId));
     }
 
+    @Operation(summary = "ADD PARTICIPANT TO PROJECT")
+    @PutMapping("/update/participant/{projectId}")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public ProjectDto addParticipantsToProject(@RequestBody Set<Integer> participants, @PathVariable("projectId") int projectId) {
+        return projectMapper.toProjectDto(projectService.addParticipantsToProject(participants, projectId));
+    }
+
     @Operation(summary = "DELETE SINGLE PROJECT")
     @DeleteMapping("/delete/{projectId}")
     @ResponseStatus(value = HttpStatus.OK)
