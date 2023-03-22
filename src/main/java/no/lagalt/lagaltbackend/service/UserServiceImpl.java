@@ -52,4 +52,12 @@ public class UserServiceImpl implements UserService{
                 new ResourceNotFoundException("USER_NOT_EXIST.")
         );
     }
+
+    @Override
+    public AppUser findByEmail(String email) {
+        if (userRepository.findByEmail(email) == null) {
+            return null;
+        }
+        return userRepository.findByEmail(email);
+    }
 }

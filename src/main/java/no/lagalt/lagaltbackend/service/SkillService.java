@@ -4,6 +4,5 @@ import no.lagalt.lagaltbackend.pojo.entity.Skill;
 
 import java.util.List;
 
-public interface SkillService extends CrudService<Skill,Integer> {
-    List<String> findAllSkillNames();
+public interface SkillService extends CrudService<Skill, Integer> {
 }

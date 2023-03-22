@@ -94,5 +94,4 @@ public class ProjectController {
         projectService.deleteById(projectId);
         return "PROJECT_DELETED";
     }
-
 }

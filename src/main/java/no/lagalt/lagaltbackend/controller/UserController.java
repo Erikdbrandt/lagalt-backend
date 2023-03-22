@@ -42,19 +42,32 @@ public class UserController {
     @Operation(summary = "CREATE USER")
     @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.OK)
+    @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET})
     public AppUserDto create(@RequestBody AppUserDto userDto) {
         AppUser appUser = userMapper.toAppUser(userDto);
         return userMapper.toAppUserDto(userService.create(appUser));
     }
 
     @Operation(summary = "UPDATE SINGLE USER")
-    @PatchMapping("/update/{userId}")
+    @PutMapping("/update/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public AppUserDto updateById(@RequestBody AppUserDto appUserDto,@PathVariable("userId") int userId) {
-        AppUser appUser = userMapper.toAppUser(appUserDto);
+    public AppUserDto updateById(@RequestBody AppUserDto updatedUser, @PathVariable("userId") int userId) {
+        AppUser appUser = userMapper.toAppUser(updatedUser);
         return userMapper.toAppUserDto(userService.update(userId, appUser));
     }
 
+    @Operation(summary = "GET SINGLE USER BY EMAIL")
+    @GetMapping("/email/{email}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public AppUserDto findByEmail(@PathVariable("email") String email) {
+
+        //if email is not found, return null
+        if (userService.findByEmail(email) == null) {
+            return null;
+        }
+
+        return userMapper.toAppUserDto(userService.findByEmail(email));
+    }
 
     @Operation(summary = "DELETE USER BY ID")
     @DeleteMapping("/delete/{userId}")

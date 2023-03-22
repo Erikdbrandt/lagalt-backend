@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SkillServiceImpl implements SkillService{
+public class SkillServiceImpl implements SkillService {
 
 
     private final SkillRepository skillRepository;
@@ -45,25 +45,18 @@ public class SkillServiceImpl implements SkillService{
     @Override
     public void deleteById(Integer integer) {
 
-        if(skillRepository.existsById(integer)){
+        if (skillRepository.existsById(integer)) {
             Skill skill = findById(integer);
-            if(skill.getProjects() != null){
+            if (skill.getProjects() != null) {
                 skill.getProjects().forEach(project -> project.getSkills().remove(skill));
             }
-            if(skill.getUsers() != null){
+            if (skill.getUsers() != null) {
                 skill.getUsers().forEach(user -> user.getSkills().remove(skill));
             }
 
             skillRepository.deleteById(integer);
 
         }
-    }
-
-    @Override
-    public List<String> findAllSkillNames() {
-        List<Skill> allSkills = skillRepository.findAll();
-        List<String> allSkillNames = allSkills.stream().map(Skill ::getName).collect(Collectors.toList());
-        return allSkillNames;
     }
 }
 
