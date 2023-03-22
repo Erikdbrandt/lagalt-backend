@@ -24,7 +24,7 @@ public class AppUser {
     private int user_id;
     private String full_name;
     private String email;
-//    @Transient
+    //    @Transient
     private String password;
     @Enumerated(EnumType.STRING)
     private AuthorityType authorityType;

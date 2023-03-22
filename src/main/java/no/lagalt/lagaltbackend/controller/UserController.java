@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +32,8 @@ public class UserController {
         return userList.stream()
                 .map(userMapper::toAppUserDto).collect(Collectors.toList());
     }
+
+
 
     @Operation(summary = "GET SINGLE USER")
     @GetMapping("/{userId}")
@@ -73,8 +76,20 @@ public class UserController {
     @PutMapping("/update/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
     public AppUserDto updateById(@RequestBody AppUserDto updatedUser, @PathVariable("userId") int userId) {
+
         AppUser appUser = userMapper.toAppUser(updatedUser);
         return userMapper.toAppUserDto(userService.update(userId, appUser));
+    }
+
+    @Operation(summary = "UPDATE a users skills by ID")
+    @PutMapping("/update/skills/{userId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public AppUserDto updateUserSkillsById(@RequestBody Set<Integer> skillIDs, @PathVariable("userId") int userId) {
+
+        if(skillIDs == null) {
+            return null;
+        }
+        return userMapper.toAppUserDto(userService.updateUserSkillsById(skillIDs, userId));
     }
 
     @Operation(summary = "DELETE USER BY ID")
