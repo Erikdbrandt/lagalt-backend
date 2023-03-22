@@ -44,7 +44,12 @@ public class ProjectServiceImpl implements ProjectService {
                     .map(Skill::getSkill_id)
                     .collect(Collectors.toSet())));
             project.setSkills(skills);
-            skillRepository.saveAll(skills);
+
+            for (Skill skill : skills) {
+                Set<Project> projects = skill.getProjects();
+                projects.add(project);
+                skill.setProjects(projects);
+            }
         }
         return projectRepository.save(project);
     }

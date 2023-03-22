@@ -23,7 +23,8 @@ public class SecurityConfig {
                 .sessionManagement().disable() // Disable CSRF -- not necessary when there are no sessions
                 .csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize// Enable security for http requests
-                        .requestMatchers("/project", "/project/{id}", "/project/skills/{projectId}", "/skill", "/skill/{id}", "/project/owner/{projectId}", "/project/ownerName/{projectId}", "/skill/names").permitAll()
+//                        .requestMatchers("/project", "/project/{id}", "/project/skills/{projectId}", "/skill", "/skill/{id}", "/project/owner/{projectId}", "/project/ownerName/{projectId}", "/skill/names").permitAll()
+                        .requestMatchers("/project", "/project/**", "/skill", "/skill/**").permitAll()
                         .anyRequest().authenticated()) // All endpoints are protected
                 .oauth2ResourceServer()
                 .jwt();
