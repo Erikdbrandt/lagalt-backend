@@ -24,7 +24,7 @@ public class AppUser {
     private int user_id;
     private String full_name;
     private String email;
-    private String roles;
+    private String authority_type;
     @Enumerated(EnumType.STRING)
     private UserVisibility userVisibility;
     @OneToMany(mappedBy = "owner")

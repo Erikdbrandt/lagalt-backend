@@ -7,15 +7,16 @@ import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.representations.AccessToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -41,8 +42,23 @@ public class UserAuthorizer {
 //        new User(user.getEmail(), "", new ArrayList<>());
     }
     public AppUser getCurrentTokenUser(){
-        Optional<AppUser> user = userRepository.findAppUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        return user.orElseThrow(()->new ResourceNotFoundException("USER_MISSING"));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof KeycloakPrincipal) {
+            KeycloakPrincipal<KeycloakSecurityContext> keycloakPrincipal = (KeycloakPrincipal<KeycloakSecurityContext>) authentication.getPrincipal();
+            AccessToken accessToken = keycloakPrincipal.getKeycloakSecurityContext().getToken();
+
+            // Extract user information from the access token
+            String username = accessToken.getPreferredUsername();
+            String email = accessToken.getEmail();
+            // Create a new AppUser object and populate it with the user information
+            AppUser appUser = new AppUser();
+            appUser.setFull_name(username);
+            appUser.setEmail(email);
+            return userRepository.save(appUser);
+        } else {
+            throw new ResourceNotFoundException("USER_MISSING");
+        }
     }
 
 
