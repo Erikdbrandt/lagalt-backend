@@ -1,15 +1,22 @@
 package no.lagalt.lagaltbackend.pojo.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
+import no.lagalt.lagaltbackend.repository.SkillRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class ProjectMapperImpl implements ProjectMapper {
+    private final SkillRepository skillRepository;
 
 
     @Override
@@ -54,7 +61,6 @@ public class ProjectMapperImpl implements ProjectMapper {
         project.setTheme(dto.getTheme());
         project.setProject_status(dto.getProject_status());
         project.setProject_type(dto.getProject_type());
-
         return project;
     }
 }

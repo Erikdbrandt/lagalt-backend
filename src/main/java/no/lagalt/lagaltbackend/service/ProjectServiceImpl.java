@@ -6,17 +6,19 @@ import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.ProjectRepository;
+import no.lagalt.lagaltbackend.repository.SkillRepository;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final SkillRepository skillRepository;
 
     @Override
     public Collection<Project> findAll() {
@@ -34,6 +36,12 @@ public class ProjectServiceImpl implements ProjectService {
             AppUser owner = userRepository.findById(project.getOwner().getUser_id()).orElseThrow(() -> new ResourceNotFoundException("OWNER_DOES_NOT_EXIST"));
             project.setOwner(owner);
         }
+        if (project.getSkills() != null && project.getSkills().size() > 0) {
+            Set<Skill> skills = new HashSet<>(skillRepository.findAllById(project.getSkills().stream()
+                    .map(Skill::getSkill_id)
+                    .collect(Collectors.toSet())));
+            project.setSkills(skills);
+        }
         return projectRepository.save(project);
     }
 
@@ -46,7 +54,6 @@ public class ProjectServiceImpl implements ProjectService {
         foundProject.setProject_status(project.getProject_status());
         foundProject.setProject_type(project.getProject_type());
         foundProject.setParticipants(project.getParticipants());
-        foundProject.setSkills(project.getSkills());
         return projectRepository.save(foundProject);
     }
 
@@ -54,13 +61,14 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteById(Integer projectId) {
         projectRepository.deleteById(projectId);
     }
+
     @Override
     public Collection<String> findProjectSkill(int projectId) {
         Project foundProject = getProjectById(projectId);
         Collection<Skill> skills = foundProject.getSkills();
         Collection<String> skillNames = new ArrayList<>();
 
-        for( Skill skill : skills) {
+        for (Skill skill : skills) {
             skillNames.add(skill.getName());
         }
         return skillNames;
@@ -69,16 +77,32 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public AppUser findProjectOwner(int projectId) {
         Project foundProject = getProjectById(projectId);
-        AppUser owner = foundProject.getOwner();
-        return owner;
+        return foundProject.getOwner();
     }
 
     @Override
     public String findProjectOwnerName(int projectId) {
         Project foundProject = getProjectById(projectId);
         AppUser owner = foundProject.getOwner();
-        String fullName = owner.getFull_name();
-        return fullName;
+        return owner.getFull_name();
+    }
+
+    @Override
+    public Project addSkillsToProject(int projectId, Set<Integer> skills) {
+
+        Project project = findById(projectId);
+        Set<Skill> skillSet = new HashSet<>();
+        for (Integer skill : skills) {
+            Skill skillById = skillRepository.findById(skill).orElseThrow(()-> new ResourceNotFoundException("SKILL_DOES_NOT_EXIST"));
+            skillSet.add(skillById);
+            project.setSkills(skillSet);
+        }
+        for (Skill skill : skillSet) {
+            Set<Project> skillProjects = skill.getProjects();
+            skillProjects.add(project);
+            skillRepository.save(skill);
+        }
+        return projectRepository.save(project);
     }
 
     private Project getProjectById(Integer integer) {

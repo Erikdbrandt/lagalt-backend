@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -71,7 +72,7 @@ public class ProjectController {
     @Operation(summary = "CREATE PROJECT")
     @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
-    @PreAuthorize("hasRole('offline_offset')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ProjectDto create(@RequestBody ProjectDto projectDto) {
         Project project = projectMapper.toProject(projectDto);
         return projectMapper.toProjectDto(projectService.create(project));
@@ -84,6 +85,13 @@ public class ProjectController {
     public ProjectDto updateProjectById(@RequestBody ProjectDto projectDto, @PathVariable("projectId") int projectId) {
         Project project = projectMapper.toProject(projectDto);
         return projectMapper.toProjectDto(projectService.update(projectId, project));
+    }
+
+    @Operation(summary = "UPDATE SINGLE PROJECT")
+    @PutMapping("/add/skills/{projectId}")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public ProjectDto addSkillsToProject(@RequestBody Set<Integer> skills, @PathVariable("projectId") int projectId) {
+        return projectMapper.toProjectDto(projectService.addSkillsToProject(projectId, skills));
     }
 
     @Operation(summary = "DELETE SINGLE PROJECT")
