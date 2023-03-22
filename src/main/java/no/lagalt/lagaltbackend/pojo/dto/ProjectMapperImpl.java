@@ -6,6 +6,7 @@ import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.SkillRepository;
+import no.lagalt.lagaltbackend.service.services.SkillService;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -16,7 +17,8 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class ProjectMapperImpl implements ProjectMapper {
-    private final SkillRepository skillRepository;
+//    private final SkillRepository skillRepository;
+//    private final SkillService skillService;
 
 
     @Override

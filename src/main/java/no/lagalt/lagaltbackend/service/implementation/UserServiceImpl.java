@@ -3,12 +3,16 @@ package no.lagalt.lagaltbackend.service.implementation;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
+import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 
+import no.lagalt.lagaltbackend.service.services.SkillService;
 import no.lagalt.lagaltbackend.service.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserAuthorizer authorizer;
+    private final SkillService skillService;
 
 
 
@@ -61,4 +66,19 @@ public class UserServiceImpl implements UserService {
         authorizer.loadUserByUsername();
         return authorizer.getCurrentTokenUser();
     }
+
+    @Override
+    public AppUser addSkillsToUser(Set<Integer> skills, int userId) {
+        AppUser user = findById(userId);
+        Set<Skill> skillSet = skills.stream().map(skillService::findById)
+                .collect(Collectors.toSet());
+        user.setSkills(skillSet);
+        for (Skill skill : skillSet) {
+            Set<AppUser> users = skill.getUsers();
+            users.add(user);
+            skill.setUsers(users);
+        }
+        return userRepository.save(user);
+    }
+
 }

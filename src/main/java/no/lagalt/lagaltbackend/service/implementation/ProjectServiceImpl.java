@@ -9,6 +9,7 @@ import no.lagalt.lagaltbackend.repository.ProjectRepository;
 import no.lagalt.lagaltbackend.repository.SkillRepository;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 import no.lagalt.lagaltbackend.service.services.ProjectService;
+import no.lagalt.lagaltbackend.service.services.SkillService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,6 +21,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final SkillRepository skillRepository;
+    private final SkillService skillService;
 
     @Override
     public Collection<Project> findAll() {
@@ -42,6 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
                     .map(Skill::getSkill_id)
                     .collect(Collectors.toSet())));
             project.setSkills(skills);
+            skillRepository.saveAll(skills);
         }
         return projectRepository.save(project);
     }
@@ -89,19 +92,17 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project addSkillsToProject(int projectId, Set<Integer> skills) {
+    public Project addSkillsToProject(Set<Integer> skills, int projectId) {
 
         Project project = findById(projectId);
-        Set<Skill> skillSet = new HashSet<>();
-        for (Integer skill : skills) {
-            Skill skillById = skillRepository.findById(skill).orElseThrow(()-> new ResourceNotFoundException("SKILL_DOES_NOT_EXIST"));
-            skillSet.add(skillById);
-            project.setSkills(skillSet);
-        }
+        Set<Skill> skillSet = skills.stream().map(skillService::findById)
+                .collect(Collectors.toSet());
+        project.setSkills(skillSet);
+
         for (Skill skill : skillSet) {
-            Set<Project> skillProjects = skill.getProjects();
-            skillProjects.add(project);
-            skillRepository.save(skill);
+            Set<Project> projects = skill.getProjects();
+            projects.add(project);
+            skill.setProjects(projects);
         }
         return projectRepository.save(project);
     }

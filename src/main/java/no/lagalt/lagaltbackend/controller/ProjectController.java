@@ -87,11 +87,11 @@ public class ProjectController {
         return projectMapper.toProjectDto(projectService.update(projectId, project));
     }
 
-    @Operation(summary = "UPDATE SINGLE PROJECT")
-    @PutMapping("/add/skills/{projectId}")
+    @Operation(summary = "ADD SKILL TO PROJECT")
+    @PutMapping("/update/skills/{projectId}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ProjectDto addSkillsToProject(@RequestBody Set<Integer> skills, @PathVariable("projectId") int projectId) {
-        return projectMapper.toProjectDto(projectService.addSkillsToProject(projectId, skills));
+        return projectMapper.toProjectDto(projectService.addSkillsToProject(skills, projectId));
     }
 
     @Operation(summary = "DELETE SINGLE PROJECT")

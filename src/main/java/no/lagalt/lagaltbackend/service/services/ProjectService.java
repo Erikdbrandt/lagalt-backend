@@ -14,5 +14,5 @@ public interface ProjectService extends CrudService<Project, Integer> {
 
     String findProjectOwnerName(int projectId);
 
-    Project addSkillsToProject(int projectId, Set<Integer> skills);
+    Project addSkillsToProject(Set<Integer> skills, int projectId);
 }
