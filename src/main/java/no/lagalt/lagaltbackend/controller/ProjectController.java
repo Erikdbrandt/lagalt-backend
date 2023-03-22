@@ -87,15 +87,22 @@ public class ProjectController {
         return projectMapper.toProjectDto(projectService.update(projectId, project));
     }
 
+    @Operation(summary = "ADD Owner TO PROJECT")
+    @PutMapping("/add/owner/projectId/{projectId}")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public ProjectDto addOwnerToProject(@RequestBody int owner, @PathVariable("projectId") int projectId) {
+        return projectMapper.toProjectDto(projectService.addOwnerToProject(owner, projectId));
+    }
+
     @Operation(summary = "ADD SKILL TO PROJECT")
-    @PutMapping("/update/skills/{projectId}")
+    @PutMapping("/add/skills/projectId/{projectId}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ProjectDto addSkillsToProject(@RequestBody Set<Integer> skills, @PathVariable("projectId") int projectId) {
         return projectMapper.toProjectDto(projectService.addSkillsToProject(skills, projectId));
     }
 
     @Operation(summary = "ADD PARTICIPANT TO PROJECT")
-    @PutMapping("/update/participant/{projectId}")
+    @PutMapping("/add/participant/projectId/{projectId}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public ProjectDto addParticipantsToProject(@RequestBody Set<Integer> participants, @PathVariable("projectId") int projectId) {
         return projectMapper.toProjectDto(projectService.addParticipantsToProject(participants, projectId));

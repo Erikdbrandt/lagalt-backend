@@ -40,6 +40,10 @@ public class ProjectServiceImpl implements ProjectService {
         if (project.getOwner() != null) {
             AppUser owner = userRepository.findById(project.getOwner().getUser_id()).orElseThrow(() -> new ResourceNotFoundException("OWNER_DOES_NOT_EXIST"));
             project.setOwner(owner);
+            Set<Project> projects = owner.getProjects();
+            for (Project p : projects) {
+                p.setOwner(owner);
+            }
         }
         if (project.getSkills() != null && project.getSkills().size() > 0) {
             Set<Skill> skills = new HashSet<>(skillRepository.findAllById(project.getSkills().stream()
@@ -51,6 +55,18 @@ public class ProjectServiceImpl implements ProjectService {
                 Set<Project> projects = skill.getProjects();
                 projects.add(project);
                 skill.setProjects(projects);
+            }
+        }
+
+        if (project.getParticipants() != null && project.getParticipants().size() > 0) {
+            Set<AppUser> participants = new HashSet<>(userRepository.findAllById(project.getParticipants().stream()
+                    .map(AppUser::getUser_id).collect(Collectors.toSet())));
+            project.setParticipants(participants);
+
+            for (AppUser participant : participants) {
+                Set<Project> projects = participant.getProjects();
+                projects.add(project);
+                participant.setProjects(projects);
             }
         }
         return projectRepository.save(project);
@@ -126,6 +142,15 @@ public class ProjectServiceImpl implements ProjectService {
             projects.add(project);
             participant.setProjects(projects);
         }
+        return projectRepository.save(project);
+    }
+
+    @Override
+    public Project addOwnerToProject(int owner, int projectId) {
+        Project project = findById(projectId);
+        AppUser existingOwner = userService.findById(owner);
+        project.setOwner(existingOwner);
+        existingOwner.setProjects(existingOwner.getProjects());
         return projectRepository.save(project);
     }
 
