@@ -2,8 +2,10 @@ package no.lagalt.lagaltbackend.service;
 
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
+import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.repository.ProjectRepository;
+import no.lagalt.lagaltbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,6 +14,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Collection<Project> findAll() {
@@ -25,6 +28,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project create(Project project) {
+        if (project.getOwner() != null) {
+            AppUser owner = userRepository.findById(project.getOwner().getUser_id()).orElseThrow(() -> new ResourceNotFoundException("OWNER_DOES_NOT_EXIST"));
+            project.setOwner(owner);
+        }
         return projectRepository.save(project);
     }
 
