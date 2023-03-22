@@ -1,4 +1,4 @@
-package no.lagalt.lagaltbackend.service;
+package no.lagalt.lagaltbackend.service.services;
 
 
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;

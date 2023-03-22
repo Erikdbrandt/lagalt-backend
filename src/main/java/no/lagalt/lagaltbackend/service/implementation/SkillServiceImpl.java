@@ -1,8 +1,9 @@
-package no.lagalt.lagaltbackend.service;
+package no.lagalt.lagaltbackend.service.implementation;
 
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.SkillRepository;
+import no.lagalt.lagaltbackend.service.services.SkillService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SkillServiceImpl implements SkillService{
+public class SkillServiceImpl implements SkillService {
 
 
     private final SkillRepository skillRepository;

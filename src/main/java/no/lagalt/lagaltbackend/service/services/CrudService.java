@@ -1,4 +1,4 @@
-package no.lagalt.lagaltbackend.service;
+package no.lagalt.lagaltbackend.service.services;
 
 import java.util.Collection;
 

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.SkillDto;
 import no.lagalt.lagaltbackend.pojo.dto.SkillMapper;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
-import no.lagalt.lagaltbackend.service.SkillService;
+import no.lagalt.lagaltbackend.service.services.SkillService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

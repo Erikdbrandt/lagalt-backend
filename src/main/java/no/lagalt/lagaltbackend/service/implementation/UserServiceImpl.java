@@ -1,17 +1,18 @@
-package no.lagalt.lagaltbackend.service;
+package no.lagalt.lagaltbackend.service.implementation;
 
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 
+import no.lagalt.lagaltbackend.service.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserAuthorizer authorizer;

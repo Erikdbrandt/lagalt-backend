@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.*;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
-import no.lagalt.lagaltbackend.service.ProjectService;
+import no.lagalt.lagaltbackend.service.services.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

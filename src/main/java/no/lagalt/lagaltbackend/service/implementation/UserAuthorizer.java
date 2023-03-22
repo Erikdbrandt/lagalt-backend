@@ -1,4 +1,4 @@
-package no.lagalt.lagaltbackend.service;
+package no.lagalt.lagaltbackend.service.implementation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

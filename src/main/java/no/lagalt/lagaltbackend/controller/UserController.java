@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.AppUserDto;
 import no.lagalt.lagaltbackend.pojo.dto.AppUserMapper;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
-import no.lagalt.lagaltbackend.service.UserService;
+import no.lagalt.lagaltbackend.service.services.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
