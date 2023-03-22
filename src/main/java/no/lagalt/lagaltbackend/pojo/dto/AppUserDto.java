@@ -11,7 +11,7 @@ public class AppUserDto {
     private int user_id;
     private String full_name;
     private String email;
-    private String roles;
+    private String authority_type;
     private UserVisibility userVisibility;
     private List<Integer> projects;
     private List<Integer> skills;

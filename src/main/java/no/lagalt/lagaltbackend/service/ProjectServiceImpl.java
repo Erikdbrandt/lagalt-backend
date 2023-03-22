@@ -2,8 +2,6 @@ package no.lagalt.lagaltbackend.service;
 
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
-import no.lagalt.lagaltbackend.pojo.dto.AppUserDto;
-import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;

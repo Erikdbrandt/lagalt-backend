@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
         AppUser foundUser = getUserById(userId);
         foundUser.setFull_name(entity.getFull_name());
         foundUser.setEmail(entity.getEmail());
-        foundUser.setRoles(entity.getRoles());
+        foundUser.setAuthority_type(entity.getAuthority_type());
         foundUser.setUserVisibility(entity.getUserVisibility());
         return userRepository.save(foundUser);
     }

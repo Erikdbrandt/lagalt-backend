@@ -22,19 +22,9 @@ public class SecurityConfig {
                 .cors().and() // Sessions will not be used
                 .sessionManagement().disable() // Disable CSRF -- not necessary when there are no sessions
                 .csrf().disable()
-                .authorizeHttpRequests(authorize -> authorize // Enable security for http requests
-                        .requestMatchers("/project").permitAll()
-                        .anyRequest().authenticated())  // All endpoints are protected
-                // Enable security for http requests
-                .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers("/project", "/project/{id}", "/project/skills/{projectId}",  "/skill", "/skill/{id}", "/project/owner/{projectId}", "/project/ownerName/{projectId}", "/skill/names" ).permitAll()
-
-//                                .requestMatchers("/user").authenticated()
-//                        .requestMatchers("/api/v1/resources/authorized").hasAuthority("profile")
-//                        .requestMatchers("/project/**").hasRole("offline_access")
-                                // All endpoints are protected
-                                .anyRequest().authenticated()
-                )
+                .authorizeHttpRequests(authorize -> authorize// Enable security for http requests
+                        .requestMatchers("/project", "/project/{id}", "/project/skills/{projectId}", "/skill", "/skill/{id}", "/project/owner/{projectId}", "/project/ownerName/{projectId}", "/skill/names").permitAll()
+                        .anyRequest().authenticated()) // All endpoints are protected
                 .oauth2ResourceServer()
                 .jwt();
         return http.build();
