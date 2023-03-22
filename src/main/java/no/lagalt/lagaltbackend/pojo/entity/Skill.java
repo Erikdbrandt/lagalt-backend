@@ -26,10 +26,7 @@ public class Skill {
             joinColumns = @JoinColumn(name = "skill_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<AppUser> users;
-    @ManyToMany
-    @JoinTable(name = "project_skill",
-            joinColumns = @JoinColumn(name = "skill_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    @ManyToMany(mappedBy = "skills")
     private Set<Project> projects;
 
 }

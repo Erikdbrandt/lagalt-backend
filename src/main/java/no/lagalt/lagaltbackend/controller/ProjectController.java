@@ -2,8 +2,7 @@ package no.lagalt.lagaltbackend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import no.lagalt.lagaltbackend.pojo.dto.ProjectDto;
-import no.lagalt.lagaltbackend.pojo.dto.ProjectMapper;
+import no.lagalt.lagaltbackend.pojo.dto.*;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.service.ProjectService;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,8 @@ public class ProjectController {
     private final ProjectService projectService;
     private final ProjectMapper projectMapper;
 
+    private final AppUserMapper appUserMapper;
+
     @Operation(summary = "GET ALL PROJECT")
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
@@ -32,6 +33,34 @@ public class ProjectController {
 
     }
 
+    @Operation(summary = "GET PROJECT SKILLS")
+    @GetMapping("/skills/{projectId}")
+    @ResponseStatus(value = HttpStatus.OK)
+//    @PreAuthorize("hasRole('adminn')")
+    public Collection<String> getProjectSkillName(@PathVariable("projectId") int projectId) {
+        return projectService.findProjectSkill(projectId);
+
+    }
+
+    @Operation(summary = "GET PROJECT OWNER")
+    @GetMapping("/owner/{projectId}")
+    @ResponseStatus(value = HttpStatus.OK)
+//    @PreAuthorize("hasRole('adminn')")
+    public AppUserDto getProjectOwnerName(@PathVariable("projectId") int projectId) {
+        return appUserMapper.toAppUserDto(projectService.findProjectOwner(projectId));
+
+    }
+
+    @Operation(summary = "GET PROJECT OWNER")
+    @GetMapping("/ownerName/{projectId}")
+    @ResponseStatus(value = HttpStatus.OK)
+//    @PreAuthorize("hasRole('adminn')")
+    public String getProjectOwnerNameString(@PathVariable("projectId") int projectId) {
+        return projectService.findProjectOwnerName(projectId);
+
+    }
+
+    //    @PreAuthorize("hasRole('offline_access')")
     @Operation(summary = "GET SINGLE PROJECT")
     @GetMapping("/{projectId}")
     @ResponseStatus(value = HttpStatus.OK)
@@ -42,6 +71,7 @@ public class ProjectController {
     @Operation(summary = "CREATE PROJECT")
     @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
+    @PreAuthorize("hasRole('offline_offset')")
     public ProjectDto create(@RequestBody ProjectDto projectDto) {
         Project project = projectMapper.toProject(projectDto);
         return projectMapper.toProjectDto(projectService.create(project));

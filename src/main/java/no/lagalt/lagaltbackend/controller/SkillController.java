@@ -34,6 +34,16 @@ public class SkillController {
                 .map(skillMapper::toSkillDto).collect(Collectors.toList());
     }
 
+    @Operation(summary = "GET ALL SKILL NAMES")
+    @GetMapping("/names")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<String> getAllSkillNames() {
+
+        List<String> skillNameList = skillService.findAllSkillNames();
+
+        return skillNameList;
+    }
+
     @Operation(summary = "GET SKILL BY ID")
     @GetMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)

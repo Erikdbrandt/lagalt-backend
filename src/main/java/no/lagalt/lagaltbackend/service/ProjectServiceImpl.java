@@ -2,12 +2,16 @@ package no.lagalt.lagaltbackend.service;
 
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
+import no.lagalt.lagaltbackend.pojo.dto.AppUserDto;
+import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
+import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.ProjectRepository;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -51,6 +55,32 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteById(Integer projectId) {
         projectRepository.deleteById(projectId);
+    }
+    @Override
+    public Collection<String> findProjectSkill(int projectId) {
+        Project foundProject = getProjectById(projectId);
+        Collection<Skill> skills = foundProject.getSkills();
+        Collection<String> skillNames = new ArrayList<>();
+
+        for( Skill skill : skills) {
+            skillNames.add(skill.getName());
+        }
+        return skillNames;
+    }
+
+    @Override
+    public AppUser findProjectOwner(int projectId) {
+        Project foundProject = getProjectById(projectId);
+        AppUser owner = foundProject.getOwner();
+        return owner;
+    }
+
+    @Override
+    public String findProjectOwnerName(int projectId) {
+        Project foundProject = getProjectById(projectId);
+        AppUser owner = foundProject.getOwner();
+        String fullName = owner.getFull_name();
+        return fullName;
     }
 
     private Project getProjectById(Integer integer) {

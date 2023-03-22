@@ -1,16 +1,17 @@
 package no.lagalt.lagaltbackend.service;
 
 import lombok.RequiredArgsConstructor;
-import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.SkillRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SkillServiceImpl implements SkillService {
+public class SkillServiceImpl implements SkillService{
 
 
     private final SkillRepository skillRepository;
@@ -22,7 +23,7 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public Skill findById(Integer id) {
-        return getSkillById(id);
+        return skillRepository.findById(id).get();
     }
 
     @Override
@@ -33,7 +34,7 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public Skill update(Integer id, Skill entity) {
 
-        Skill skill = getSkillById(id);
+        Skill skill = findById(id);
 
         skill.setName(entity.getName());
         skill.setDescription(entity.getDescription());
@@ -44,21 +45,25 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public void deleteById(Integer integer) {
 
-        Skill skill = getSkillById(integer);
+        if(skillRepository.existsById(integer)){
+            Skill skill = findById(integer);
+            if(skill.getProjects() != null){
+                skill.getProjects().forEach(project -> project.getSkills().remove(skill));
+            }
+            if(skill.getUsers() != null){
+                skill.getUsers().forEach(user -> user.getSkills().remove(skill));
+            }
 
-        if (skill.getProjects() != null) {
-            skill.getProjects().forEach(project -> project.getSkills().remove(skill));
+            skillRepository.deleteById(integer);
+
         }
-        if (skill.getUsers() != null) {
-            skill.getUsers().forEach(user -> user.getSkills().remove(skill));
-        }
-
-        skillRepository.deleteById(integer);
-
     }
 
-    private Skill getSkillById(Integer id) {
-        return skillRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("SKILL_NOT_EXIST"));
+    @Override
+    public List<String> findAllSkillNames() {
+        List<Skill> allSkills = skillRepository.findAll();
+        List<String> allSkillNames = allSkills.stream().map(Skill ::getName).collect(Collectors.toList());
+        return allSkillNames;
     }
 }
 
