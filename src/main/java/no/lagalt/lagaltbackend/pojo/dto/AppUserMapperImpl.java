@@ -3,7 +3,8 @@ package no.lagalt.lagaltbackend.pojo.dto;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
-import no.lagalt.lagaltbackend.service.SkillService;
+
+import no.lagalt.lagaltbackend.service.services.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

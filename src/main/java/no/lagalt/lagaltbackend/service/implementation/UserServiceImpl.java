@@ -19,14 +19,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final SkillService skillService;
-
-
-
     private final UserRepository userRepository;
     private final UserAuthorizer authorizer;
-    private final SkillService skillService;
-
-
 
 
     public AppUser findByEmail(String email) {
