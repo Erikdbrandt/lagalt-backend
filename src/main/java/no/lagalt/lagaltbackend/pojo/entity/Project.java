@@ -36,8 +36,8 @@ public class Project {
 
     @ManyToMany
     @JoinTable(name = "project_skill",
-            joinColumns = @JoinColumn(name = "skill_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private Set<Skill> skills;
 
 }
