@@ -37,11 +37,26 @@ public class UserServiceImpl implements UserService{
 
         Set<Skill> skillsToAdd = skillIDs.stream().map(skillId -> skillService.findById(skillId))
                 .collect(Collectors.toSet());
+
+
+        Set<Skill> skillsToRemove = user.getSkills().stream()
+                .filter(skill -> !skillsToAdd.contains(skill))
+                .collect(Collectors.toSet());
+
         user.setSkills(skillsToAdd);
 
+
+
+        // Update the skills with the new user
         for(Skill skill : skillsToAdd){
             Set<AppUser> skillUsers = skill.getUsers();
             skillUsers.add(user);
+            skill.setUsers(skillUsers);
+        }
+
+        for(Skill skill : skillsToRemove){
+            Set<AppUser> skillUsers = skill.getUsers();
+            skillUsers.remove(user);
             skill.setUsers(skillUsers);
         }
         return userRepository.save(user);

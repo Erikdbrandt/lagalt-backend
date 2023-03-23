@@ -45,7 +45,7 @@ public class SkillController {
     }
 
     @Operation(summary = "CREATE SKILL")
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
     public SkillDto createSkill(@RequestBody SkillDto skillDto) {
 

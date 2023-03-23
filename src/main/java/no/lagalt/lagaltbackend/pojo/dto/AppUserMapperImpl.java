@@ -7,6 +7,7 @@ import no.lagalt.lagaltbackend.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,31 +55,11 @@ public class AppUserMapperImpl implements AppUserMapper {
         user.setAuthorityType(dto.getAuthorityType());
         user.setUserVisibility(dto.getUserVisibility());
 
-            if(dto.getSkills() != null) {
-
-                Set<Skill> skills = dto.getSkills().stream().map(skillId -> skillService.findById(skillId))
-                        .collect(Collectors.toSet());
-
-                user.setSkills(skills);
-
-
-
-                // Log the Skill entities that are associated with the AppUser
-                // Log the Skill entities that are associated with the AppUser
-                System.out.println("Skills for user " + dto.getUser_id() + ":");
-                for (Skill skill : skills) {
-                    Set<AppUser> users = skill.getUsers();
-                    System.out.println("Skill name: " + skill.getName() + ", description: " + skill.getDescription() + ", Users: ");
-                    for (AppUser user1 : users) {
-                        System.out.println(user1.getFull_name());
-                    }
-                }
-
-            }
-
-
-
-
+        if (dto.getSkills() != null) {
+            Set<Skill> skills = dto.getSkills().stream().map(skillId -> skillService.findById(skillId))
+                    .collect(Collectors.toSet());
+            user.setSkills(skills);
+        }
         return user;
     }
 }
