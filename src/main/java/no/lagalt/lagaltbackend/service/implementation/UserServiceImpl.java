@@ -18,11 +18,56 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final SkillService skillService;
+
+
+
     private final UserRepository userRepository;
     private final UserAuthorizer authorizer;
     private final SkillService skillService;
 
 
+
+
+    public AppUser findByEmail(String email) {
+
+        if (userRepository.findByEmail(email) == null) {
+            return null;
+        }
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public AppUser updateUserSkillsById(Set<Integer> skillIDs, int userId) {
+        AppUser user = getUserById(userId);
+
+        Set<Skill> skillsToAdd = skillIDs.stream().map(skillId -> skillService.findById(skillId))
+                .collect(Collectors.toSet());
+
+
+        Set<Skill> skillsToRemove = user.getSkills().stream()
+                .filter(skill -> !skillsToAdd.contains(skill))
+                .collect(Collectors.toSet());
+
+        user.setSkills(skillsToAdd);
+
+
+
+        // Update the skills with the new user
+        for(Skill skill : skillsToAdd){
+            Set<AppUser> skillUsers = skill.getUsers();
+            skillUsers.add(user);
+            skill.setUsers(skillUsers);
+        }
+
+        for(Skill skill : skillsToRemove){
+            Set<AppUser> skillUsers = skill.getUsers();
+            skillUsers.remove(user);
+            skill.setUsers(skillUsers);
+        }
+        return userRepository.save(user);
+
+    }
 
     @Override
     public Collection<AppUser> findAll() {
@@ -41,12 +86,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUser update(Integer userId, AppUser entity) {
+
+
         AppUser foundUser = getUserById(userId);
         foundUser.setFull_name(entity.getFull_name());
         foundUser.setEmail(entity.getEmail());
         foundUser.setAuthority_type(entity.getAuthority_type());
         foundUser.setUserVisibility(entity.getUserVisibility());
+
+        foundUser.setSkills(entity.getSkills());
+
+
+
+        System.out.println(entity.getSkills());
+
+        System.out.println("heeeeeeeeeeeeeeeeeeeeej");
+
         return userRepository.save(foundUser);
+
+
     }
 
     @Override
