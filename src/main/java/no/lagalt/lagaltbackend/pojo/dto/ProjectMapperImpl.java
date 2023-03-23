@@ -64,21 +64,21 @@ public class ProjectMapperImpl implements ProjectMapper {
         project.setTheme(dto.getTheme());
         project.setProject_status(dto.getProject_status());
         project.setProject_type(dto.getProject_type());
-//        if (dto.getOwner() != 0) {
-//            AppUser owner = userRepository.findById(dto.getOwner())
-//                    .orElseThrow(() -> new ResourceNotFoundException("OWNER_DOES_NOT_EXIST"));
-//            project.setOwner(owner);
-//        }
-//
-//        if (dto.getParticipants() != null && dto.getParticipants().size() > 0) {
-//            Set<AppUser> participants = new HashSet<>(userRepository.findAllById(dto.getParticipants()));
-//            project.setParticipants(participants);
-//        }
-//
-//        if (dto.getSkills() != null && dto.getSkills().size() > 0) {
-//            Set<Skill> skills = new HashSet<>(skillRepository.findAllById(dto.getSkills()));
-//            project.setSkills(skills);
-//        }
+        if (dto.getOwner() != 0) {
+            AppUser owner = userRepository.findById(dto.getOwner())
+                    .orElseThrow(() -> new ResourceNotFoundException("OWNER_DOES_NOT_EXIST"));
+            project.setOwner(owner);
+        }
+
+        if (dto.getParticipants() != null && dto.getParticipants().size() > 0) {
+            Set<AppUser> participants = new HashSet<>(userRepository.findAllById(dto.getParticipants()));
+            project.setParticipants(participants);
+        }
+
+        if (dto.getSkills() != null && dto.getSkills().size() > 0) {
+            Set<Skill> skills = new HashSet<>(skillRepository.findAllById(dto.getSkills()));
+            project.setSkills(skills);
+        }
         return project;
     }
 }
