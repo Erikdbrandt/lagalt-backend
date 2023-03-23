@@ -72,7 +72,7 @@ public class ProjectController {
     @Operation(summary = "CREATE PROJECT")
     @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ProjectDto create(@RequestBody ProjectDto projectDto) {
         Project project = projectMapper.toProject(projectDto);
         return projectMapper.toProjectDto(projectService.create(project));

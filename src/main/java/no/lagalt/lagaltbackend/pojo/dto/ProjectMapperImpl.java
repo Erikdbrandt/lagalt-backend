@@ -1,17 +1,25 @@
 package no.lagalt.lagaltbackend.pojo.dto;
 
 import lombok.RequiredArgsConstructor;
+import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
+import no.lagalt.lagaltbackend.repository.SkillRepository;
+import no.lagalt.lagaltbackend.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class ProjectMapperImpl implements ProjectMapper {
+
+    private final UserRepository userRepository;
+    private final SkillRepository skillRepository;
 
 
     @Override
@@ -56,6 +64,21 @@ public class ProjectMapperImpl implements ProjectMapper {
         project.setTheme(dto.getTheme());
         project.setProject_status(dto.getProject_status());
         project.setProject_type(dto.getProject_type());
+//        if (dto.getOwner() != 0) {
+//            AppUser owner = userRepository.findById(dto.getOwner())
+//                    .orElseThrow(() -> new ResourceNotFoundException("OWNER_DOES_NOT_EXIST"));
+//            project.setOwner(owner);
+//        }
+//
+//        if (dto.getParticipants() != null && dto.getParticipants().size() > 0) {
+//            Set<AppUser> participants = new HashSet<>(userRepository.findAllById(dto.getParticipants()));
+//            project.setParticipants(participants);
+//        }
+//
+//        if (dto.getSkills() != null && dto.getSkills().size() > 0) {
+//            Set<Skill> skills = new HashSet<>(skillRepository.findAllById(dto.getSkills()));
+//            project.setSkills(skills);
+//        }
         return project;
     }
 }

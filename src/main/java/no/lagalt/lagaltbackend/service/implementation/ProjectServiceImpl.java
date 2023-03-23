@@ -46,12 +46,21 @@ public class ProjectServiceImpl implements ProjectService {
             }
         }
         if (project.getSkills() != null && project.getSkills().size() > 0) {
-            Set<Skill> skills = new HashSet<>(skillRepository.findAllById(project.getSkills().stream()
-                    .map(Skill::getSkill_id)
-                    .collect(Collectors.toSet())));
-            project.setSkills(skills);
+//            Set<Skill> skills = new HashSet<>(skillRepository.findAllById(project.getSkills().stream()
+//                    .map(Skill::getSkill_id)
+//                    .collect(Collectors.toSet())));
+//            project.setSkills(skills);
+//
+//            for (Skill skill : skills) {
+//                Set<Project> projects = skill.getProjects();
+//                projects.add(project);
+//                skill.setProjects(projects);
+//            }
 
-            for (Skill skill : skills) {
+            Set<Integer> skills = project.getSkills().stream().map(Skill::getSkill_id).collect(Collectors.toSet());
+            Set<Skill> skillSet = skills.stream().map(skillService::findById).collect(Collectors.toSet());
+            project.setSkills(skillSet);
+            for (Skill skill : skillSet) {
                 Set<Project> projects = skill.getProjects();
                 projects.add(project);
                 skill.setProjects(projects);
@@ -68,6 +77,22 @@ public class ProjectServiceImpl implements ProjectService {
                 projects.add(project);
                 participant.setProjects(projects);
             }
+        }
+        return projectRepository.save(project);
+    }
+
+    @Override
+    public Project addSkillsToProject(Set<Integer> skills, int projectId) {
+
+        Project project = findById(projectId);
+        Set<Skill> skillSet = skills.stream().map(skillService::findById)
+                .collect(Collectors.toSet());
+        project.setSkills(skillSet);
+
+        for (Skill skill : skillSet) {
+            Set<Project> projects = skill.getProjects();
+            projects.add(project);
+            skill.setProjects(projects);
         }
         return projectRepository.save(project);
     }
@@ -112,22 +137,6 @@ public class ProjectServiceImpl implements ProjectService {
         Project foundProject = getProjectById(projectId);
         AppUser owner = foundProject.getOwner();
         return owner.getFull_name();
-    }
-
-    @Override
-    public Project addSkillsToProject(Set<Integer> skills, int projectId) {
-
-        Project project = findById(projectId);
-        Set<Skill> skillSet = skills.stream().map(skillService::findById)
-                .collect(Collectors.toSet());
-        project.setSkills(skillSet);
-
-        for (Skill skill : skillSet) {
-            Set<Project> projects = skill.getProjects();
-            projects.add(project);
-            skill.setProjects(projects);
-        }
-        return projectRepository.save(project);
     }
 
     @Override
