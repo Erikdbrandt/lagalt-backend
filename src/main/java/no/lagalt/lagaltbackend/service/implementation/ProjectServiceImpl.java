@@ -46,21 +46,12 @@ public class ProjectServiceImpl implements ProjectService {
             }
         }
         if (project.getSkills() != null && project.getSkills().size() > 0) {
-//            Set<Skill> skills = new HashSet<>(skillRepository.findAllById(project.getSkills().stream()
-//                    .map(Skill::getSkill_id)
-//                    .collect(Collectors.toSet())));
-//            project.setSkills(skills);
-//
-//            for (Skill skill : skills) {
-//                Set<Project> projects = skill.getProjects();
-//                projects.add(project);
-//                skill.setProjects(projects);
-//            }
+            Set<Skill> skills = new HashSet<>(skillRepository.findAllById(project.getSkills().stream()
+                    .map(Skill::getSkill_id)
+                    .collect(Collectors.toSet())));
+            project.setSkills(skills);
 
-            Set<Integer> skills = project.getSkills().stream().map(Skill::getSkill_id).collect(Collectors.toSet());
-            Set<Skill> skillSet = skills.stream().map(skillService::findById).collect(Collectors.toSet());
-            project.setSkills(skillSet);
-            for (Skill skill : skillSet) {
+            for (Skill skill : skills) {
                 Set<Project> projects = skill.getProjects();
                 projects.add(project);
                 skill.setProjects(projects);
