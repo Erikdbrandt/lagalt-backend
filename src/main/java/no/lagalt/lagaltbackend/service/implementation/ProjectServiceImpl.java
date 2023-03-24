@@ -154,6 +154,26 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.save(project);
     }
 
+    @Override
+    public Project joinProject(int participantId, int projectId) {
+        Project project = findById(projectId);
+        AppUser participant = userService.findById(participantId);
+        Set<AppUser> participantsExisting = project.getParticipants();
+        participantsExisting.add(participant);
+        project.setParticipants(participantsExisting);
+        return projectRepository.save(project);
+    }
+
+    @Override
+    public Project unJoinProject(int participantId, int projectId) {
+        Project project = findById(projectId);
+        AppUser participant = userService.findById(participantId);
+        Set<AppUser> participantsExisting = project.getParticipants();
+        participantsExisting.remove(participant);
+        project.setParticipants(participantsExisting);
+        return projectRepository.save(project);
+    }
+
     private Project getProjectById(Integer integer) {
         return projectRepository.findById(integer)
                 .orElseThrow(() -> new ResourceNotFoundException("PROJECT_NOT_EXIST"));
