@@ -3,6 +3,7 @@ package no.lagalt.lagaltbackend.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.*;
+import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.service.services.ProjectService;
 import org.springframework.http.HttpStatus;
@@ -101,11 +102,18 @@ public class ProjectController {
         return projectMapper.toProjectDto(projectService.addSkillsToProject(skills, projectId));
     }
 
-    @Operation(summary = "ADD PARTICIPANT TO PROJECT")
-    @PutMapping("/add/participant/projectId/{projectId}")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public ProjectDto addParticipantsToProject(@RequestBody Set<Integer> participants, @PathVariable("projectId") int projectId) {
-        return projectMapper.toProjectDto(projectService.addParticipantsToProject(participants, projectId));
+    @Operation(summary = "JOIN A PROJECT")
+    @PutMapping("/join/participantId/{participantId}/projectId/{projectId}")
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    public ProjectDto joinProject(@PathVariable("participantId") int participantId, @PathVariable("projectId") int projectId) {
+        return projectMapper.toProjectDto(projectService.joinProject(participantId, projectId));
+    }
+
+    @Operation(summary = "UNJOIN A PROJECT")
+    @PutMapping("/unjoin/participantId/{participantId}/projectId/{projectId}")
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    public ProjectDto unJoinProject(@PathVariable("participantId") int participantId, @PathVariable("projectId") int projectId) {
+        return projectMapper.toProjectDto(projectService.unJoinProject(participantId, projectId));
     }
 
     @Operation(summary = "DELETE SINGLE PROJECT")
@@ -115,5 +123,4 @@ public class ProjectController {
         projectService.deleteById(projectId);
         return "PROJECT_DELETED";
     }
-
 }

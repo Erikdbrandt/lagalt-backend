@@ -19,4 +19,8 @@ public interface ProjectService extends CrudService<Project, Integer> {
     Project addParticipantsToProject(Set<Integer> participants, int projectId);
 
     Project addOwnerToProject(int owner, int projectId);
+
+    Project joinProject(int participantId, int projectId);
+
+    Project unJoinProject(int participantId, int projectId);
 }
