@@ -1,16 +1,16 @@
 -- Insert some users
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
-VALUES ('John Smith', 'john@example.com', 'zoro123', 'ADMIN', 'HIDDEN');
+INSERT INTO app_user (full_name, email,  authority_type, user_visibility)
+VALUES ('John Smith', 'john@example.com', 'ADMIN', 'HIDDEN');
 
 
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
-VALUES ('Juli Zeh', 'juliZeh@gmail.com', 'zoeeeh', 'USER', 'REGULAR');
+INSERT INTO app_user (full_name, email,  authority_type, user_visibility)
+VALUES ('Juli Zeh', 'juliZeh@gmail.com', 'USER', 'REGULAR');
 
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
-VALUES ('Donna Tartt', 'donna.tartt@gmail.com', 'donnis', 'USER', 'REGULAR');
+INSERT INTO app_user (full_name, email,  authority_type, user_visibility)
+VALUES ('Donna Tartt', 'donna.tartt@gmail.com', 'USER', 'REGULAR');
 
-INSERT INTO app_user (full_name, email, password, authority_type, user_visibility)
-VALUES ('J.K. Rowling', 'jkrowling.com', 'jkrowling', 'USER', 'REGULAR');
+INSERT INTO app_user (full_name, email,  authority_type, user_visibility)
+VALUES ('J.K. Rowling', 'jkrowling.com', 'USER', 'REGULAR');
 
 
 INSERT INTO project (title, description, theme, project_status, project_type)
