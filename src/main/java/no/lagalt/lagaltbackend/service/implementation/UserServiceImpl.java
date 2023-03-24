@@ -3,6 +3,7 @@ package no.lagalt.lagaltbackend.service.implementation;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
+import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 
@@ -61,6 +62,12 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.save(user);
 
+    }
+
+    @Override
+    public Collection<Project> findProjectsByUserId(int userId) {
+        AppUser user = findById(userId);
+        return user.getProjects();
     }
 
     @Override

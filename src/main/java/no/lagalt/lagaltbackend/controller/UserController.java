@@ -4,7 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.AppUserDto;
 import no.lagalt.lagaltbackend.pojo.dto.AppUserMapper;
+import no.lagalt.lagaltbackend.pojo.dto.ProjectDto;
+import no.lagalt.lagaltbackend.pojo.dto.ProjectMapper;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
+import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.service.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ public class UserController {
 
     private final UserService userService;
     private final AppUserMapper userMapper;
+    private final ProjectMapper projectMapper;
 
     @GetMapping("/auth")
     @ResponseStatus(value = HttpStatus.OK)
@@ -46,6 +50,14 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public AppUserDto findById(@PathVariable("userId") int userId) {
         return userMapper.toAppUserDto(userService.findById(userId));
+    }
+
+    @Operation(summary = "GET USER PROJECTS")
+    @GetMapping("projects/user/{userId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ProjectDto> findProjectsByUserId(@PathVariable("userId") int userId) {
+        Collection<Project> projects = userService.findProjectsByUserId(userId);
+        return projects.stream().map(projectMapper::toProjectDto).collect(Collectors.toList());
     }
 
     @Operation(summary = "GET SINGLE USER BY EMAIL")
