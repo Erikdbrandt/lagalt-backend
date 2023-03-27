@@ -1,6 +1,7 @@
 package no.lagalt.lagaltbackend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.SkillDto;
 import no.lagalt.lagaltbackend.pojo.dto.SkillMapper;
@@ -25,6 +26,7 @@ public class SkillController {
 
     @Operation(summary = "GET ALL SKILLS")
     @GetMapping
+    @PermitAll
     @ResponseStatus(value = HttpStatus.OK)
     public List<SkillDto> getAllSkills() {
 

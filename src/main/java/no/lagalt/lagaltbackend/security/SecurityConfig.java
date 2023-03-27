@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize// Enable security for http requests
 //                        .requestMatchers("/project", "/project/{id}", "/project/skills/{projectId}", "/skill", "/skill/{id}", "/project/owner/{projectId}", "/project/ownerName/{projectId}", "/skill/names").permitAll()
-                        .requestMatchers("/project", "/project/**", "/skill", "/skill/**").permitAll()
+                        .requestMatchers("/project", "/project/**", "/skill", "/skill/**","/user","/user/**").permitAll()
                         .anyRequest().authenticated()) // All endpoints are protected
                 .oauth2ResourceServer()
                 .jwt();
