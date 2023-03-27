@@ -61,6 +61,13 @@ public class UserController {
         Collection<Project> projects = userService.findProjectsByUserId(userId);
         return projects.stream().map(projectMapper::toProjectDto).collect(Collectors.toList());
     }
+    @Operation(summary = "GET USER PARTICIPANTS PROJECTS")
+    @GetMapping("projects/participants/user/{userId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ProjectDto> findParticipantsProjectsByUserId(@PathVariable("userId") int userId) {
+        Collection<Project> projects = userService.findProjectsThatIParticipated(userId);
+        return projects.stream().map(projectMapper::toProjectDto).collect(Collectors.toList());
+    }
 
     @Operation(summary = "GET SINGLE USER BY EMAIL")
     @GetMapping("/email/{email}")
@@ -84,20 +91,11 @@ public class UserController {
         return userMapper.toAppUserDto(userService.create(appUser));
     }
 
-/*    @Operation(summary = "UPDATE SINGLE USER")
-    @GetMapping("/update/{userId}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public AppUserDto updateById(@RequestBody AppUserDto appUserDto,@PathVariable("userId") int userId) {
-        AppUser appUser = userMapper.toAppUser(appUserDto);
-        return userMapper.toAppUserDto(userService.update(userId, appUser));
-    }*/
-
     @Operation(summary = "UPDATE SINGLE USER")
     @PutMapping("/update/{userId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public AppUserDto updateById(@RequestBody AppUserDto updatedUser, @PathVariable("userId") int userId) {
-
-        AppUser appUser = userMapper.toAppUser(updatedUser);
+    public AppUserDto updateById(@RequestBody AppUserDto appUserDto,@PathVariable("userId") int userId) {
+        AppUser appUser = userMapper.toAppUser(appUserDto);
         return userMapper.toAppUserDto(userService.update(userId, appUser));
     }
 

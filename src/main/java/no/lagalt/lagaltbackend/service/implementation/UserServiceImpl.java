@@ -5,14 +5,15 @@ import no.lagalt.lagaltbackend.exception.ResourceNotFoundException;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
 import no.lagalt.lagaltbackend.pojo.entity.Project;
 import no.lagalt.lagaltbackend.pojo.entity.Skill;
+import no.lagalt.lagaltbackend.repository.ProjectRepository;
 import no.lagalt.lagaltbackend.repository.UserRepository;
 
+import no.lagalt.lagaltbackend.service.services.ProjectService;
 import no.lagalt.lagaltbackend.service.services.SkillService;
 import no.lagalt.lagaltbackend.service.services.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final SkillService skillService;
+    private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final UserAuthorizer authorizer;
 
@@ -47,15 +49,14 @@ public class UserServiceImpl implements UserService {
         user.setSkills(skillsToAdd);
 
 
-
         // Update the skills with the new user
-        for(Skill skill : skillsToAdd){
+        for (Skill skill : skillsToAdd) {
             Set<AppUser> skillUsers = skill.getUsers();
             skillUsers.add(user);
             skill.setUsers(skillUsers);
         }
 
-        for(Skill skill : skillsToRemove){
+        for (Skill skill : skillsToRemove) {
             Set<AppUser> skillUsers = skill.getUsers();
             skillUsers.remove(user);
             skill.setUsers(skillUsers);
@@ -68,6 +69,22 @@ public class UserServiceImpl implements UserService {
     public Collection<Project> findProjectsByUserId(int userId) {
         AppUser user = findById(userId);
         return user.getProjects();
+    }
+
+    @Override
+    public Collection<Project> findProjectsThatIParticipated(int userId) {
+        List<Project> result = new ArrayList<>();
+        AppUser user = findById(userId);
+
+
+        Collection<Project> projects = projectRepository.findAll();
+        for (Project project : projects) {
+            Set<AppUser> participants = project.getParticipants();
+            if (participants.contains(user)) {
+                result.add(project);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -96,7 +113,6 @@ public class UserServiceImpl implements UserService {
         foundUser.setUserVisibility(entity.getUserVisibility());
 
         foundUser.setSkills(entity.getSkills());
-
 
 
         System.out.println(entity.getSkills());
