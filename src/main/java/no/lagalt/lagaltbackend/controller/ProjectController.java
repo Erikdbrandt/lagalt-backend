@@ -1,6 +1,7 @@
 package no.lagalt.lagaltbackend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.*;
 import no.lagalt.lagaltbackend.pojo.entity.AppUser;
@@ -26,6 +27,7 @@ public class ProjectController {
 
     @Operation(summary = "GET ALL PROJECT")
     @GetMapping
+    @PermitAll
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectDto> getAllProject() {
         Collection<Project> projects = projectService.findAll();

@@ -1,6 +1,7 @@
 package no.lagalt.lagaltbackend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import no.lagalt.lagaltbackend.pojo.dto.AppUserDto;
 import no.lagalt.lagaltbackend.pojo.dto.AppUserMapper;
@@ -33,8 +34,9 @@ public class UserController {
         return userMapper.toAppUserDto(currentTokenUser);
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+
     @Operation(summary = "GET ALL USERS")
+    @PermitAll
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public List<AppUserDto> getAllUser() {
