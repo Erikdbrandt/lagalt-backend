@@ -72,6 +72,7 @@ public class ProjectMapperImpl implements ProjectMapper {
 
         if (dto.getParticipants() != null && dto.getParticipants().size() > 0) {
             Set<AppUser> participants = new HashSet<>(userRepository.findAllById(dto.getParticipants()));
+            System.out.println("I AM HERE");
             project.setParticipants(participants);
         }
 

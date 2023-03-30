@@ -1,23 +1,23 @@
-server:
-  servlet:
-    context-path: "/api/v1"
-spring:
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/lagalt_db
-    username: postgres
-    password: root
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update # change to "create" to drop and create tables, change to "update" to update schema
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-  main:
-    allow-bean-definition-overriding: true
-  sql:
-    init:
-      mode: never # change to "always" to execute SQL scripts on every startup
-
-
+#server:
+#  servlet:
+#    context-path: "/api/v1"
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://127.0.0.1:5432/lagalt_db
+#    username: postgres
+#    password: root
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    hibernate:
+#      ddl-auto: update # change to "create" to drop and create tables, change to "update" to update schema
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#  main:
+#    allow-bean-definition-overriding: true
+#  sql:
+#    init:
+#      mode: never # change to "always" to execute SQL scripts on every startup
+#
+#
